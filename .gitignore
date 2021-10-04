@@ -118,3 +118,6 @@ modules.xml
 /build/
 
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains+all,phpunit,composer
+
+# environment
+config/env.php
