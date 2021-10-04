@@ -7,4 +7,6 @@ return [
     "database.username" => "",
     "database.password" => "",
     "database.dbname" => "",
+
+    "website.name" => "",
 ];
