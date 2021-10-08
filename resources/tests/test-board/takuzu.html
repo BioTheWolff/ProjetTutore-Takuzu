@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Takuzu</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="takuzu" />
+    <style>
+      :root {
+        --grid-size: 8;
+      }
+      #grid {
+        display: inline-grid;
+        grid-template-rows: repeat(var(--grid-size), 1fr);
+        grid-template-columns: repeat(var(--grid-size), 1fr);
+        font-family: Courier, monospace;
+        font-weight: bold;
+        font-size: 1em;
+      }
+      .cell {
+        padding: 1em;
+        margin: 0.1em;
+        border: 5px solid #000;
+        text-align: center;
+        border-radius: 50%;
+        width: 1em;
+        height: 1em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>✨ Test grille takuzu</h2>
+    <div id="grid">
+    </div>
+
+    <script src="test.js"></script>
+  </body>
+</html> 
