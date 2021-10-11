@@ -7,13 +7,9 @@ $count = [[1, 0, 1, 0], [1, 1, 0, 0], [0, 1, 0, 1], [1, 0, 1, 1]];
 $mult = [[1, 0, 1, 0], [1, 1, 0, 0], [0, 1, 0, 1], [0, 1, 1, 1]];
 
 var_dump(partial_verify($passing));
-echo '<br>';
 var_dump(partial_verify($shape));
-echo '<br>';
 var_dump(partial_verify($count));
-echo '<br>';
 var_dump(partial_verify($mult));
-echo '<br>';
 
 $start = microtime(true);
 partial_verify($passing);

@@ -1,5 +1,7 @@
 <?php
 
+CONST GAP = 5;
+
 function partial_verify(array $grid, array $insert_pos = null, int $insertion = null): ?array
 {
     $mult = -1;
@@ -23,7 +25,7 @@ function partial_verify(array $grid, array $insert_pos = null, int $insertion = 
                 );
                 $line[] = $n;
 
-                if ($n == 9) $is_full = false;
+                if ($n == GAP) $is_full = false;
 
                 // test multiplicité
                 if ($j == 0)
@@ -40,7 +42,7 @@ function partial_verify(array $grid, array $insert_pos = null, int $insertion = 
                 }
 
                 // erreur multiplicité
-                if ($mult >= 3) return ["MULT", [$d, $d == 'l' ? $i : $j, $d == 'l' ? $j : $i]];
+                if ($seen != GAP && $mult >= 3) return ["MULT", [$d, $d == 'l' ? $i : $j, $d == 'l' ? $j : $i]];
 
                 // règle d'apparence
                 if ($n == 1) $c_one++;
@@ -70,7 +72,7 @@ function number_of_gaps(array $grid): int
     {
         for ($j = 0; $j < count($grid[0]); $j++)
         {
-            if ($grid[$i][$j] == '-') $n++;
+            if ($grid[$i][$j] == GAP) $n++;
         }
     }
 
@@ -97,23 +99,41 @@ function solve(array $grid): array
             {
                 for ($j = 0; $j < count($grid[0]); $j++)
                 {
+                    // si la case est remplie, on continue
+                    if (get($grid, $d, $i, $j) != GAP) continue;
 
-                    if (
-                        (
-                            $j >= 2
-                            && ($c = get($grid, $d, $i, $j-1)) == get($grid, $d, $i, $j-2))
-                        || (
-                            $j >= 1 && $j <= count($grid[0])-1
-                            && ($c = get($grid, $d, $i, $j-1)) == get($grid, $d, $i, $j+1))
-                        || (
-                            $j <= count($grid[0])-2
-                            && ($c = get($grid, $d, $i, $j+1)) == get($grid, $d, $i, $j+2))
-                        && partial_verify($grid, [$i, $j], 1 - $c)
+                    $changed = false;
+
+
+                    if ($j >= 2
+                        && ($c = get($grid, $d, $i, $j-1)) == get($grid, $d, $i, $j-2)
+                        && is_null(partial_verify($grid, [$d == 'l' ? $i : $j, $d == 'l' ? $j : $i], 1 - $c))
                     )
                     {
                         $grid[$d == 'l' ? $i : $j][$d == 'l' ? $j : $i] = 1 - $c;
-                        $filled = (--$gaps == 0);
+                        $changed = true;
                     }
+
+                    if ($j >= 1 && $j < count($grid[0])-1
+                        && ($c = get($grid, $d, $i, $j-1)) == get($grid, $d, $i, $j+1)
+                        && is_null(partial_verify($grid, [$d == 'l' ? $i : $j, $d == 'l' ? $j : $i], 1 - $c))
+                    )
+                    {
+                        $grid[$d == 'l' ? $i : $j][$d == 'l' ? $j : $i] = 1 - $c;
+                        $changed = true;
+                    }
+
+                    if ($j < count($grid[0])-2
+                        && ($c = get($grid, $d, $i, $j+1)) == get($grid, $d, $i, $j+2)
+                        && is_null(partial_verify($grid, [$d == 'l' ? $i : $j, $d == 'l' ? $j : $i], 1 - $c))
+                    )
+                    {
+                        $grid[$d == 'l' ? $i : $j][$d == 'l' ? $j : $i] = 1 - $c;
+                        $changed = true;
+                    }
+
+
+                    if ($changed == true) $filled = (--$gaps == 0);
                 }
             }
         }
