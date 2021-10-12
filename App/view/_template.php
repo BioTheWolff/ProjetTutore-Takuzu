@@ -1,9 +1,9 @@
 <?php
 
-$view = $view ?? 'error/not_found';
+$rvar_file_name = $rvar_file_name ?? 'error/not_found';
 
-$title = Config::getInstance()->get("website.name");
-if (isset($page_title)) $title .= " | $page_title";
+$rvar_site_title = Config::getInstance()->get("website.name", "Projet Takuzu");
+if (isset($rvar_page_title)) $rvar_site_title .= " | $rvar_page_title";
 
 ?>
 <!doctype html>
@@ -13,7 +13,8 @@ if (isset($page_title)) $title .= " | $page_title";
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?= $title ?></title>
+    <link rel="stylesheet" href="assets/css/template.css">
+    <title><?= $rvar_site_title ?></title>
 </head>
 <body>
     <header>
@@ -21,7 +22,7 @@ if (isset($page_title)) $title .= " | $page_title";
     </header>
 
     <div id="container">
-        <?php require_once("$view.php"); ?>
+        <?php require_once("$rvar_file_name.php"); ?>
     </div>
 
     <footer>

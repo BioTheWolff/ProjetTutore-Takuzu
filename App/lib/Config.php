@@ -12,7 +12,7 @@ class Config
 
     private function __construct()
     {
-        $this->env = Path::get_config_path();
+        $this->env = require_once(Path::get_config_path());
     }
 
     /**
