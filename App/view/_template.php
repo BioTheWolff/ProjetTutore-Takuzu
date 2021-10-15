@@ -22,7 +22,8 @@ if (isset($rvar_page_title)) $rvar_site_title .= " | $rvar_page_title";
     </header>
 
     <div id="container">
-        <?php require_once("$rvar_file_name.php"); ?>
+        <!-- Affiche la view utilisé -->
+        <?php require_once("content/$rvar_file_name.php"); ?>
     </div>
 
     <footer>

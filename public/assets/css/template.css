@@ -4,11 +4,17 @@ html, body
 }
 
 /* PAGE D'ACCUEIL*/
-.page_accueil{
-    flex-direction: row;
+#page_accueil{
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    align-items: center;
+
 }
-.accueil{
-    background: #ededed;
+
+.accueil_section{
+    text-align: center;
 }
 .bouton{
     border: 20px;
@@ -20,16 +26,56 @@ html, body
 .bouton a:hover{
     color: brown;
 }
-.Logo {
+.accueil_logo {
     width: 200px;
     height: 200px;
 }
-.Logo h2 {
+.accueil_logo h2 {
     text-shadow: 2px 2px 4px rosybrown;
     color: #ededed;
 }
-.Logo img {
+.accueil_logo img {
     border-radius: 10px 100px / 120px;
     width: 150px;
     height: 150px;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+button {
+    cursor: pointer;
+    outline: none;
+}
+
+.outline {
+    position: relative;
+    z-index: 3;
+    background: transparent;
+    color: #1172c4;
+    font-size: 14px;
+    border-color: #1172c4;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 22px;
+    padding: 10px 40px;
+    text-transform: uppercase;
+    transition: all 0.2s linear;
+}
+
+a {
+    text-decoration: none;
+}
+
+.outline:hover {
+    color: white;
+    background: #1172c4;
+    border-color: white;
+    transition: all 0.2s linear;
+}
+
+.outline:active {
+    border-radius: 22px;
 }
