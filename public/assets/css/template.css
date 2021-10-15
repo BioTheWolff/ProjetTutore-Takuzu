@@ -2,3 +2,34 @@ html, body
 {
     background: #e0c994;
 }
+
+/* PAGE D'ACCUEIL*/
+.page_accueil{
+    flex-direction: row;
+}
+.accueil{
+    background: #ededed;
+}
+.bouton{
+    border: 20px;
+    box-shadow: 3px 3px 0px blueviolet inset;
+    text-shadow: 2px 2px 4px rosybrown;
+    margin: 20px;
+    padding: 20px;
+}
+.bouton a:hover{
+    color: brown;
+}
+.Logo {
+    width: 200px;
+    height: 200px;
+}
+.Logo h2 {
+    text-shadow: 2px 2px 4px rosybrown;
+    color: #ededed;
+}
+.Logo img {
+    border-radius: 10px 100px / 120px;
+    width: 150px;
+    height: 150px;
+}
