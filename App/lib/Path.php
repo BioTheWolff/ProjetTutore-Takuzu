@@ -32,6 +32,6 @@ class Path
 
     public static function get_config_path(): string
     {
-        return self::PROJECT_ROOT . "config/env.example.php";
+        return self::PROJECT_ROOT . "config/env.php";
     }
 }
