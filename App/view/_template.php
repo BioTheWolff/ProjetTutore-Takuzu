@@ -25,12 +25,13 @@ if (isset($rvar_page_title)) $rvar_site_title .= " | $rvar_page_title";
     <div id="container">
         <!-- Affiche la view utilisé -->
         <?php require_once("content/$rvar_file_name.php"); ?>
-        <script type="text/javascript" src="assets/js/<?=$rvar_file_name?>.js"></script>
     </div>
 
     <footer>
         <?php require_once('_footer.php'); ?>
     </footer>
+
+    <script type="text/javascript" src="assets/js/main.js"></script>
 
 </body>
 </html>
