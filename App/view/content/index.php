@@ -37,12 +37,13 @@
                             <img id="sonImage" src="assets/img/son-sur.png">
                         </button>
                         <button id="musicButton" type="submit" class="sonButt">
-                            <span class="material-icons-outlined"><img id="sonImage" src="assets/img/audiotrack.png"></span>
+                            <img id="musicImage" src="assets/img/music.png" alt="mettre/couper la musique">
                         </button>
                         <audio>
                             <source controls src="assets/music/warning_pulse.mp3" type="audio/mpeg" volume="50" loop="false" autostart="false">
                             Votre navigateur ne supporte pas la balise audio.
                         </audio>
+                        
                     </div>
                 </div>
             </div>
