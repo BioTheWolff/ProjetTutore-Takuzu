@@ -1,0 +1,26 @@
+:root {
+    --grid-size: 8;
+}
+#grid {
+    display: inline-grid;
+    grid-template-rows: repeat(var(--grid-size), 1fr);
+    grid-template-columns: repeat(var(--grid-size), 1fr);
+    font-family: Courier, monospace;
+    font-weight: bold;
+    font-size: 1em;
+}
+.cell {
+    padding: 1em;
+    margin: 0.1em;
+    text-align: center;
+    border-radius: 50%;
+    width: 1em;
+    height: 1em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -moz-box-shadow: inset -2px -2px 6px 1px #000000;
+    -webkit-box-shadow: inset -2px -2px 6px 1px #000000;
+    box-shadow: inset -2px -2px 6px 1px #000000;
+}

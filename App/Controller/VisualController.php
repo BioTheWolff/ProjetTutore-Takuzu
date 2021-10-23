@@ -9,4 +9,8 @@ class VisualController
         RenderEngine::render("index", "Accueil");
     }
 
+    public static function play()
+    {
+        RenderEngine::render("play", "Jeu");
+    }
 }
