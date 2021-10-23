@@ -24,3 +24,15 @@
     -webkit-box-shadow: inset -2px -2px 6px 1px #000000;
     box-shadow: inset -2px -2px 6px 1px #000000;
 }
+
+.cell.empty {
+    background-color: #fff;
+}
+
+.cell.zero {
+    background-color: #ffe66d;
+}
+
+.cell.one {
+    background-color: #ff6b6b;
+}
