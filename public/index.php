@@ -1,7 +1,7 @@
 <?php
-require_once('../App/lib/Path.php');
-require_once('../App/lib/Config.php');
-require_once('../App/lib/RenderEngine.php');
+require_once('../App/Lib/Path.php');
+require_once('../App/Lib/Config.php');
+require_once('../App/Lib/RenderEngine.php');
 
 
 require_once(Path::get_path("c", "APIController"));

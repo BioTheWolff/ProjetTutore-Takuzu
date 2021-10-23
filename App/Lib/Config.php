@@ -1,7 +1,7 @@
 <?php
 require_once 'Path.php';
 
-class   Config
+class Config
 {
     /**
      * @var Config $instance
