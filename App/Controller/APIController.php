@@ -2,6 +2,7 @@
 
 require_once(Path::get_path("l", "Adapter"));
 require_once(Path::get_path("m", "GridVerifier"));
+require_once(Path::get_path("l", "Douane"));
 
 
 /**
@@ -17,7 +18,11 @@ class APIController
      */
     public static function check()
     {
-        echo(GridVerifier::partial_verify(Adapter::message_to_grid($_GET['message'])));
+        if (!Douane::message($_GET['message'] ?? "")) {
+            http_response_code(400);
+            echo "NOK";
+        }
+        else echo(GridVerifier::partial_verify(Adapter::message_to_grid($_GET['message'])));
     }
 
     /**
