@@ -38,8 +38,8 @@ class GridVerifier
                 for ($j = 0; $j < count($grid[0]); $j++)
                 {
                     $n = ($d == 'l'
-                        ? ($i == $insert_pos[0] && $j == $insert_pos[1] ? $insertion : $grid[$i][$j])
-                        : ($i == $insert_pos[1] && $j == $insert_pos[0] ? $insertion : $grid[$j][$i])
+                        ? ($i === $insert_pos[0] && $j === $insert_pos[1] ? $insertion : $grid[$i][$j])
+                        : ($i === $insert_pos[1] && $j === $insert_pos[0] ? $insertion : $grid[$j][$i])
                     );
                     $line[] = $n;
 
