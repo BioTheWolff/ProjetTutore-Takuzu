@@ -17,9 +17,9 @@
                     </div>
                     <div class="popup-body">
                         <h3>Choisissez de la taille de la grille</h3>
-                        <button id="8" type="submit" class="outline"> 8x8 </button>
-                        <button id="10" type="submit" class="outline"> 10x10 </button>
-                        <button id="12" type="submit" class="outline"> 12x12 </button>
+                        <button id="8" type="submit" class="outline" onclick="launchGame(8)">    8x8    </button>
+                        <button id="10" type="submit" class="outline" onclick="launchGame(10)">   10x10   </button>
+                        <button id="12" type="submit" class="outline" onclick="launchGame(12)">   12x12   </button>
                     </div>
                 </div>
             </div>
