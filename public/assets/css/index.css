@@ -45,8 +45,9 @@ button {
     transition: all 0.2s linear;
 }
 
-a {
+.outline:hover{
     text-decoration: none;
+    color: white;
 }
 
 .outline:hover {

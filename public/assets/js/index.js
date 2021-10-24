@@ -13,6 +13,11 @@ var playGame = document.getElementById("playGame");
 var spanXPartie = document.getElementsByClassName("close")[0];
 var spanXOption = document.getElementsByClassName("close")[1];
 
+function launchGame(number) {
+    var url = "http://localhost/projettutore-takuzu/public/?action=play&size=" + number;
+    window.open(url,"_self");
+}
+
 // Lorsque l'utilisateur clique sur le bouton option, ça ouvre la popup options
 optionButton.onclick = function() {
     // affiche la popup
@@ -66,6 +71,8 @@ spanXOption.onclick = function() {
         audio.play();
     }
 }
+
+
 
 /*
 ----FERME LE POPUP SI ON CLIQUE SUR LES BOUTONS QUI SONT DANS LE POPUP----
