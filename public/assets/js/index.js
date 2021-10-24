@@ -17,9 +17,9 @@ var spanXOption = document.getElementsByClassName("close")[1];
 optionButton.onclick = function() {
     // affiche la popup
     popupOption.style.display = "block";
-    // cache les boutons lancer partie et options
-    optionButton.style.visibility = "hidden";
-    playGame.style.visibility = "hidden";
+    // désarme les boutons lancer partie et options
+    optionButton.disabled = true;
+    playGame.disabled = true;
     // vérifie si le son est activé, si oui on lance le son stocké
     if (sonBool){
         audio.currentTime = 0;
@@ -30,9 +30,9 @@ optionButton.onclick = function() {
 // Lorsque l'utilisateur clique sur le bouton lancerPartie, ça ouvre la popup lancer partie
 playGame.onclick = function () {
     popupPartie.style.display = "block";
-    // cache les boutons lancer partie et options
-    optionButton.style.visibility = "hidden";
-    playGame.style.visibility = "hidden";
+    // désarme les boutons lancer partie et options
+    optionButton.disabled = true;
+    playGame.disabled = true;
     // vérifie si le son est activé, si oui on lance le son stocké
     if (sonBool){
         audio.currentTime = 0;
@@ -44,9 +44,9 @@ playGame.onclick = function () {
 spanXPartie.onclick = function() {
     //cache le popup
     popupPartie.style.display = "none";
-    // remet visible les boutons
-    optionButton.style.visibility = "visible";
-    playGame.style.visibility = "visible";
+    // arme les boutons lancer partie et options
+    optionButton.disabled = false;
+    playGame.disabled = false;
     // vérifie si le son est activé, si oui on lance le son stocké
     if (sonBool){
         audio.currentTime = 0;
@@ -57,9 +57,9 @@ spanXPartie.onclick = function() {
 spanXOption.onclick = function() {
     //cache le popup
     popupOption.style.display = "none";
-    // remet visible les boutons
-    optionButton.style.visibility = "visible";
-    playGame.style.visibility = "visible";
+    // arme les boutons lancer partie et options
+    optionButton.disabled = false;
+    playGame.disabled = false;
     // vérifie si le son est activé, si oui on lance le son stocké
     if (sonBool){
         audio.currentTime = 0;

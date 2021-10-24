@@ -10,8 +10,9 @@ var musicButton = document.getElementById("musicButton");
 // créer un nouveau booleen
 var musicBool = Boolean(musicButton);
 
-// stock le premier élement dans le block audio
-const audio = document.querySelector('audio');
+// stock les audio dans des constantes
+const audio = document.getElementById('son');
+const musique = document.getElementById('musique');
 
 // lance l'audio
 audio.load();
@@ -33,11 +34,13 @@ sonButton.onclick = function (){
 musicButton.onclick = function (){
     musicBool = !musicBool;
     if (!musicBool){
-        // le son est éteint
-        document.getElementById("musicImage").src= "assets/img/musicOff.png";
+        // le son est Ã©teint
+        document.getElementById("musicImage").src= "assets/img/music.png";
+        musique.play();
     }
     else {
-        // le son est allumé
-        document.getElementById("musicImage").src= "assets/img/music.png";
+        // le son est allumÃ©
+        document.getElementById("musicImage").src= "assets/img/musicOff.png";
+        musique.pause();
     }
 }
