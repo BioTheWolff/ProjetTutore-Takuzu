@@ -10,17 +10,13 @@ function getSize() {
 }
 
 function downloadAndParseGrid(size) {
-    let req = new XMLHttpRequest();
-    req.open("GET", "?action=api-generate&size=" + size, true);
-    req.send();
-
-    req.onload = function () {
-        if (req.status === 200) {
-            size = req.response.split(":")[0];
-            insertInGrid(req.response.split(":")[1]);
-        }
-        else alert("Impossible de charger la grille");
-    }
+    fetch("?action=api-generate&size=" + size)
+        .then(response => response.text())
+        .then(data => {
+            size = data.split(":")[0];
+            insertInGrid(data.split(":")[1]);
+        })
+        .catch((error) => alert("Impossible de charger la grille: " + error))
 }
 
 
