@@ -27,6 +27,10 @@ sonButton.onclick = function (){
     else {
         // le son est allumé
         document.getElementById("sonImage").src= "assets/img/son-sur.png";
+        if (sonBool){
+            audio.currentTime = 0;
+            audio.play();
+        }
     }
 }
 
@@ -34,13 +38,21 @@ sonButton.onclick = function (){
 musicButton.onclick = function (){
     musicBool = !musicBool;
     if (!musicBool){
-        // le son est Ã©teint
+        // le son est éteint
         document.getElementById("musicImage").src= "assets/img/music.png";
+        if (sonBool){
+            audio.currentTime = 0;
+            audio.play();
+        }
         musique.play();
     }
     else {
-        // le son est allumÃ©
+        // le son est allumé
         document.getElementById("musicImage").src= "assets/img/musicOff.png";
         musique.pause();
+        if (sonBool){
+            audio.currentTime = 0;
+            audio.play();
+        }
     }
 }

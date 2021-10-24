@@ -13,9 +13,14 @@ var playGame = document.getElementById("playGame");
 var spanXPartie = document.getElementsByClassName("close")[0];
 var spanXOption = document.getElementsByClassName("close")[1];
 
-function launchGame(number) {
-    var url = "http://localhost/projettutore-takuzu/public/?action=play&size=" + number;
+//Ouvre la page jeu depuis la page d'accueil en fonction de la taille
+function launchGame(taille) {
+    let url = "?action=play&size=" + taille;
     window.open(url,"_self");
+    if (sonBool){
+        audio.currentTime = 0;
+        audio.play();
+    }
 }
 
 // Lorsque l'utilisateur clique sur le bouton option, ça ouvre la popup options
@@ -71,24 +76,3 @@ spanXOption.onclick = function() {
         audio.play();
     }
 }
-
-
-
-/*
-----FERME LE POPUP SI ON CLIQUE SUR LES BOUTONS QUI SONT DANS LE POPUP----
-//TODO
-
-// Lorsque l'utilisateur clique en dehors de la popup, ça ferme le popup
-document.addEventListener('mouseup', function(e) {
-    // Récupere le container où il y a la classe 'popup'
-    var containerPartie = document.getElementsByClassName('popup')[0];
-    var containerOption = document.getElementsByClassName('popup')[1];
-    // vérifie la target est la popup, si cela ne l'est plus, on retire la popup option
-    if (!containerPartie.contains(e.target) || !containerOption.contains(e.target)) {
-        containerPartie.style.display = 'none';
-        containerOption.style.display = 'none';
-        optionButton.style.visibility = "visible";
-        playGame.style.visibility = "visible";
-    }
-});
-*/
