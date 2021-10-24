@@ -31,11 +31,13 @@ function setupGrid(size, content) {
                 break;
             case "0":
                 cell.classList.replace("empty", "zero");
+                cell.classList.add("static");
                 cell.textContent = "0";
                 break;
 
             case "1":
                 cell.classList.replace("empty", "one");
+                cell.classList.add("static");
                 cell.textContent = "1";
                 break;
         }
@@ -57,6 +59,8 @@ function generateEmptyGrid(size) {
 // TODO: function qui entre les valeurs de getGrid() dans la grid vide
 
 function changeValue(cell) {
+    if (cell.classList.contains("static")) return;
+
     switch (cell.innerText) {
         case "0":
             cell.classList.replace("zero", "one")
