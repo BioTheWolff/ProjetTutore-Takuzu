@@ -2,7 +2,7 @@ const grid = document.getElementById("grid");
 
 function getSize() {
     let url = window.location.href;
-    let pattern = /((?<=size=)[0-9]{1,2})/g;
+    let pattern = /((?<=size=)[0-9]+)/g;
     let res = url.match(pattern);
     if (res === "") {
         return 8; // valeur par défaut
@@ -11,18 +11,17 @@ function getSize() {
     }
 }
 
-function downloadAndParseGrid(size) {
-    fetch("?action=api-generate&size=" + size)
+function downloadAndParseGrid() {
+    fetch("?action=api-generate&size=" + getSize())
         .then(response => response.text())
-        .then(data => {
-            size = data.split(":")[0];
-            insertInGrid(data.split(":")[1]);
-        })
+        .then(data => setupGrid(data.split(":")[0], data.split(":")[1]))
         .catch((error) => alert("Impossible de charger la grille: " + error))
 }
 
 
-function insertInGrid(content) {
+function setupGrid(size, content) {
+    generateEmptyGrid(size);
+
     /** @type {string[]} **/
     let arr = Array.from(content);
 
@@ -43,7 +42,7 @@ function insertInGrid(content) {
     }
 }
 
-function generateEmptyGrid() {
+function generateEmptyGrid(size) {
     grid.style.setProperty('--grid-size', size.toString());
     for (let i = 0; i < size ** 2; i++) {
         let cell = document.createElement("div");
@@ -93,8 +92,5 @@ function getValues() {
 
 // TODO: function qui call sendValues() après x secondes
 
-let size = getSize();
-gridString = "";
-generateEmptyGrid(size);
 downloadAndParseGrid();
 
