@@ -1,11 +1,13 @@
 const grid = document.getElementById("grid");
 
 function getSize() {
-    let s = window.location.href.replace(/.*size=([0-9]).*/, "");
-    if (s === "") {
+    let url = window.location.href;
+    let pattern = /((?<=size=)[0-9]{1,2})/g;
+    let res = url.match(pattern);
+    if (res === "") {
         return 8; // valeur par défaut
     } else {
-        return parseInt(s);
+        return parseInt(res);
     }
 }
 
