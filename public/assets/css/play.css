@@ -37,11 +37,14 @@
     background-color: #ff6b6b;
 }
 
-@keyframes morph {
-  0% { border-color: #FF0000; }
-  50% { border-color: #aa1110; }
-  100% { border-color: #FF0000; }
+.cell.static {
+    background-color: #a8a8a8;
+}
 
+@keyframes morph {
+    0% { background-color: #FF0000; }
+    50% { background-color: #aa1110; }
+    100% { background-color: #FF0000; }
 }
 
 .cell.wrong {
