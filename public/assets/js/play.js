@@ -83,7 +83,9 @@ function changeValue(cell) {
 
 function getValues() {
     let cells = document.getElementsByClassName("cell");
+    let size = grid.style.getPropertyValue('--grid-size');
     let values = size.toString().concat(":");
+
     for (let i = 0; i < size ** 2; i++) {
         let cell_value = cells.item(i).innerText;
         values = values.concat(cell_value === "" ? "_" : cell_value);
