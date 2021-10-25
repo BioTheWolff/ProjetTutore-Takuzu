@@ -36,3 +36,15 @@
 .cell.one {
     background-color: #ff6b6b;
 }
+
+@keyframes morph {
+  0% { background-color: #FF0000; }
+  50% { background-color: #aa1110; }
+  100% { background-color: #FF0000; }
+
+}
+
+.cell.wrong {
+    animation: morph 1s infinite;
+}
+

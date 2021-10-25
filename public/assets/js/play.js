@@ -56,9 +56,15 @@ function generateEmptyGrid(size) {
     }
 }
 
-// TODO: function qui entre les valeurs de getGrid() dans la grid vide
 
 function changeValue(cell) {
+    clearTimeout(timer);
+    timer = setTimeout(sendValues, 3000);
+    valuesFilled = 0;
+    for (let cell of grid.children) {
+        cell.classList.remove("wrong");
+        if (cell.innerText != "") valuesFilled++;
+    }
     if (cell.classList.contains("static")) return;
 
     switch (cell.innerText) {
@@ -82,21 +88,53 @@ function changeValue(cell) {
 }
 
 function getValues() {
-    let cells = document.getElementsByClassName("cell");
     let size = grid.style.getPropertyValue('--grid-size');
     let values = size.toString().concat(":");
 
     for (let i = 0; i < size ** 2; i++) {
-        let cell_value = cells.item(i).innerText;
+        let cell_value = (cells.item(i) == null ? "" : cells.item(i).innerText);
         values = values.concat(cell_value === "" ? "_" : cell_value);
     }
-    console.log(values);
+    console.log("\n" + "📨 GRID:   " + values);
     return values;
 }
 
-// TODO: function sendValues() qui transfère les values to php avec AJAX
+function sendValues() {
+    fetch("?action=api-check&message=" + getValues())
+        .then(response => response.text())
+        .then(data => alertWin(data))
+        .catch((error) => alert("Impossible de charger la grille: " + error))
+}
 
-// TODO: function qui call sendValues() après x secondes
+function alertWin(data) {
+    if (data == "OK") {
+        if (valuesFilled != size ** 2) return;
+        else alert("Bravo");
+    } else if (data == "NOK") {
+        alert("ERREUR");
+    } else {
+        console.log("❌ ERREUR: " + data);
+        highlightErrors(data);
+    }
+}
 
+function highlightErrors(errors) {
+    let errsplit = errors.split(":")[1].split(",");
+    if (errsplit[0] == "c") {
+        for (let i = parseInt(errsplit[2]); i < size ** 2; i = i + size) {
+            cells.item(i).classList.add("wrong");
+        }
+    } else {
+        for (let i = errsplit[1] * size; i < errsplit[1] * size + size; i++) {
+            cells.item(i).classList.add("wrong");
+        }
+    }
+}
+
+let valuesFilled = 0;
+let cells = document.getElementsByClassName("cell");
+let timer = setTimeout(sendValues, 3000);
+let size = getSize();
+clearTimeout(timer);
 downloadAndParseGrid();
 
