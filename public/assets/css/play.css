@@ -11,7 +11,7 @@
 }
 .cell {
     padding: 1em;
-    margin: 0.1em;
+    margin: 0.4em;
     text-align: center;
     border-radius: 50%;
     width: 1em;
@@ -38,13 +38,15 @@
 }
 
 @keyframes morph {
-  0% { background-color: #FF0000; }
-  50% { background-color: #aa1110; }
-  100% { background-color: #FF0000; }
+  0% { border-color: #FF0000; }
+  50% { border-color: #aa1110; }
+  100% { border-color: #FF0000; }
 
 }
 
 .cell.wrong {
+    margin: 0.1em;
+    border: 0.3em solid;
     animation: morph 1s infinite;
 }
 

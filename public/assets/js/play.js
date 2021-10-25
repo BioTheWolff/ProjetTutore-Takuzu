@@ -4,10 +4,10 @@ function getSize() {
     let url = window.location.href;
     let pattern = /((?<=size=)[0-9]+)/g;
     let res = url.match(pattern);
-    if (res === "") {
+    if (res.toString() === "") {
         return 8; // valeur par défaut
     } else {
-        return parseInt(res);
+        return parseInt(res.toString());
     }
 }
 
@@ -63,7 +63,7 @@ function changeValue(cell) {
     valuesFilled = 0;
     for (let cell of grid.children) {
         cell.classList.remove("wrong");
-        if (cell.innerText != "") valuesFilled++;
+        if (cell.innerText !== "") valuesFilled++;
     }
     if (cell.classList.contains("static")) return;
 
@@ -107,10 +107,9 @@ function sendValues() {
 }
 
 function alertWin(data) {
-    if (data == "OK") {
-        if (valuesFilled != size ** 2) return;
-        else alert("Bravo");
-    } else if (data == "NOK") {
+    if (data === "OK") {
+        if (valuesFilled === size ** 2) alert("Bravo");
+    } else if (data === "NOK") {
         alert("ERREUR");
     } else {
         console.log("❌ ERREUR: " + data);
@@ -120,7 +119,7 @@ function alertWin(data) {
 
 function highlightErrors(errors) {
     let errsplit = errors.split(":")[1].split(",");
-    if (errsplit[0] == "c") {
+    if (errsplit[0] === "c") {
         for (let i = parseInt(errsplit[2]); i < size ** 2; i = i + size) {
             cells.item(i).classList.add("wrong");
         }
