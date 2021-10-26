@@ -1,0 +1,55 @@
+:root {
+    --grid-size: 8;
+}
+#grid {
+    display: inline-grid;
+    grid-template-rows: repeat(var(--grid-size), 1fr);
+    grid-template-columns: repeat(var(--grid-size), 1fr);
+    font-family: Courier, monospace;
+    font-weight: bold;
+    font-size: 1em;
+}
+.cell {
+    padding: 1em;
+    margin: 0.4em;
+    text-align: center;
+    border-radius: 50%;
+    width: 1em;
+    height: 1em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -moz-box-shadow: inset -2px -2px 6px 1px #000000;
+    -webkit-box-shadow: inset -2px -2px 6px 1px #000000;
+    box-shadow: inset -2px -2px 6px 1px #000000;
+}
+
+.cell.empty {
+    background-color: #fff;
+}
+
+.cell.zero {
+    background-color: #ffe66d;
+}
+
+.cell.one {
+    background-color: #ff6b6b;
+}
+
+.cell.static {
+    background-color: #a8a8a8;
+}
+
+@keyframes morph {
+    0% { background-color: #FF0000; }
+    50% { background-color: #aa1110; }
+    100% { background-color: #FF0000; }
+}
+
+.cell.wrong {
+    margin: 0.1em;
+    border: 0.3em solid;
+    animation: morph 1s infinite;
+}
+

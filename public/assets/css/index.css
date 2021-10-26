@@ -33,7 +33,6 @@ button {
 
 .outline {
     position: relative;
-    z-index: 3;
     background: transparent;
     color: #1172c4;
     font-size: 14px;
@@ -46,8 +45,9 @@ button {
     transition: all 0.2s linear;
 }
 
-a {
+.outline:hover{
     text-decoration: none;
+    color: white;
 }
 
 .outline:hover {
@@ -70,14 +70,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
 .popup {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     -webkit-animation-name: fadeIn; /* Fade in the background */
     -webkit-animation-duration: 0.4s;
     animation-name: fadeIn;
@@ -117,7 +114,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
     color: white;
 }
 
-.popup-body {padding: 2px 16px;}
+.popup-body {
+    padding: 2px 16px;
+    margin-top: 6%;
+    margin-bottom: 6%;
+}
 
 .popup-footer {
     padding: 2px 16px;
@@ -130,9 +131,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
     border: transparent;
 }
 
-#sonImage{
+#sonImage, #musicImage{
     height: 50px;
     width: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 /*---ANIMATION---*/
@@ -157,6 +160,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     to {opacity: 1}
 }
 
+/*//TODO faire l'annimation de fermeture de popup*/
 /* Ferme la popup */
 @-webkit-keyframes slideOut {
     from {bottom: 0; opacity: 1}
