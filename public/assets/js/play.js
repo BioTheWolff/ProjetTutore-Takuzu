@@ -108,7 +108,7 @@ function sendValues() {
 
 function alertWin(data) {
     if (data === "OK") {
-        if (valuesFilled === size ** 2) alert("Bravo");
+        if (parseInt(valuesFilled) === size ** 2) alert("Bravo");
     } else if (data === "NOK") {
         alert("ERREUR");
     } else {
