@@ -35,16 +35,44 @@ class APIController
         // TODO: Majorer la taille par 16
 
         $g = Adapter::GAP_PHP;
-        $grid = [
-            [$g, $g, $g, $g, $g, $g, $g, $g],
-            [1, $g, $g, $g, $g, $g, $g, $g],
-            [$g, $g, $g, 0, $g, 1, $g, $g],
-            [$g, $g, $g, 0, $g, $g, 0, 0],
-            [$g, $g, $g, $g, $g, $g, 0, $g],
-            [1, $g, $g, $g, $g, $g, $g, $g],
-            [1, 1, $g, $g, $g, $g, $g, $g],
-            [$g, $g, 0, $g, $g, $g, $g, $g]
-        ];
+
+        switch ($_GET['size'] ?? '') {
+            case '12':
+                $grid = [
+                    [$g, 1, $g, $g, $g, $g, 0, $g, $g, $g, $g, $g],
+                    [$g, $g, $g, $g, $g, $g, 0, $g, $g, 0, $g, $g],
+                    [1, $g, $g, $g, $g, 0, $g, $g, $g, 1, $g, 1],
+                    [$g, 0, $g, $g, $g, $g, 1, $g, $g, $g, $g, $g],
+                    [$g, $g, 0, $g, $g, 0, $g, $g, 0, $g, $g, $g],
+                    [$g, $g, $g, 1, $g, $g, $g, 0, $g, 0, $g, $g],
+                    [$g, $g, $g, $g, $g, 0, $g, 0, $g, $g, $g, $g],
+                    [$g, $g, $g, 1, $g, $g, 1, $g, $g, $g, $g, $g],
+                    [$g, 1, $g, 1, $g, $g, $g, $g, $g, 0, $g, $g],
+                    [$g, $g, $g, $g, $g, $g, 0, $g, $g, 0, $g, $g],
+                    [$g, 1, $g, 1, $g, $g, $g, 1, $g, $g, $g, 1],
+                    [$g, $g, 0, $g, 0, $g, $g, $g, 0, 0, $g, $g],
+                ];
+                break;
+            case '4':
+                $grid = [
+                    [$g, 1, $g, $g],
+                    [1, $g, 1, $g],
+                    [1, $g, $g, $g],
+                    [$g, $g, 1, $g],
+                ];
+                break;
+            default:
+                $grid = [
+                    [$g, $g, $g, $g, $g, $g, $g, $g],
+                    [1, $g, $g, $g, $g, $g, $g, $g],
+                    [$g, $g, $g, 0, $g, 1, $g, $g],
+                    [$g, $g, $g, 0, $g, $g, 0, 0],
+                    [$g, $g, $g, $g, $g, $g, 0, $g],
+                    [1, $g, $g, $g, $g, $g, $g, $g],
+                    [1, 1, $g, $g, $g, $g, $g, $g],
+                    [$g, $g, 0, $g, $g, $g, $g, $g]
+                ];
+        }
 
         echo(Adapter::grid_to_message($grid));
     }
