@@ -14,6 +14,7 @@ if (isset($rvar_page_title)) $rvar_site_title .= " | $rvar_page_title";
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="assets/css/template.css">
+    <link rel="stylesheet" href="assets/css/<?=$rvar_file_name?>.css">
     <title><?= $rvar_site_title ?></title>
 </head>
 <body>
@@ -22,12 +23,15 @@ if (isset($rvar_page_title)) $rvar_site_title .= " | $rvar_page_title";
     </header>
 
     <div id="container">
-        <?php require_once("$rvar_file_name.php"); ?>
+        <!-- Affiche la view utilisé -->
+        <?php require_once("content/$rvar_file_name.php"); ?>
     </div>
 
     <footer>
         <?php require_once('_footer.php'); ?>
     </footer>
+
+    <script type="text/javascript" src="assets/js/main.js"></script>
 
 </body>
 </html>

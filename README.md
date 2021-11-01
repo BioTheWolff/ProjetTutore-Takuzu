@@ -1,5 +1,7 @@
 # ProjetTutoré-Takuzu
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/fabien-zoccola/ProjetTutore-Takuzu/PHP%20Composer?label=tests&style=for-the-badge)
+
 Ce dépôt git contient les sources du projet tutoré de Semestre 3 de DUT Informatique à l'IUT Montpellier-Sète (IUTMS) lors de l'année 2021-2022.
 
 Le groupe est composé de :

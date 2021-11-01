@@ -13,11 +13,15 @@ class Path
         {
             case "c":
             case "controller":
-                $dir = 'controller'; break;
+                $dir = 'Controller'; break;
 
             case "m":
             case "model":
-                $dir = 'model'; break;
+                $dir = 'Model'; break;
+
+            case "l":
+            case "lib":
+                $dir = 'Lib'; break;
 
             case "v":
             case 'view':
