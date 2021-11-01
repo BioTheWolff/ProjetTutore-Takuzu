@@ -77,4 +77,13 @@ class APIController
         echo(Adapter::grid_to_message($grid));
     }
 
+    public static function solve()
+    {
+        if (!Douane::message($_GET['message'] ?? "")) {
+            http_response_code(400);
+            echo "NOK";
+        }
+        else echo(GridSolver::solveGrid(Adapter::message_to_grid($_GET['message'])));
+    }
+
 }
