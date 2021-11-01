@@ -64,7 +64,7 @@ class GridSolver
 
                         if ($this->get($d, $i, $j) != $this->gap) continue;
 
-                        if (($v = $this->check_mult($d, $i, $j)) != null) $this->fill($d, $i, $j, 1-$v);
+                        if (($v = $this->check_mult($d, $i, $j)) !== null) $this->fill($d, $i, $j, 1-$v);
 
                     }
                 }

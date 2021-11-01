@@ -121,3 +121,5 @@ modules.xml
 
 # environment
 config/env.php
+
+*.testme.php
