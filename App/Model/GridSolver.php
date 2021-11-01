@@ -22,11 +22,18 @@ class GridSolver
      */
     private $gap;
 
+    /**
+     * The number of remaining gaps to fill
+     * @var int $gaps_number
+     */
+    private $gaps_number;
+
     private function __construct(array $grid)
     {
         $this->grid = $grid;
         $this->backtrace = [];
         $this->gap = Adapter::GAP_PHP;
+        $this->gaps_number = self::countgaps();
     }
 
     /**
@@ -83,29 +90,27 @@ class GridSolver
         }
 
         $this->grid[$i][$j] = $value;
+        $this->gaps_number--;
     }
 
     private function filled(): bool
     {
-        /**
-         * @see https://stackoverflow.com/questions/4128323/in-array-and-multidimensional-array/4128377#4128377 original solution
-         * @param mixed $needle what to look for
-         * @param array $haystack where to look in
-         * @return bool if the object was found
-         */
-        function in_array_r($needle, array $haystack): bool
-        {
-            foreach ($haystack as $item) {
-                if ($item == $needle || (is_array($item) && in_array_r($needle, $item))) {
-                    return true;
-                }
-            }
+        return $this->gaps_number == 0;
+    }
 
-            return false;
+    private function countgaps(): int
+    {
+        $n = 0;
+
+        foreach ($this->grid as $line)
+        {
+            foreach ($line as $item)
+            {
+                if ($item == $this->gap) $n++;
+            }
         }
 
-        return in_array_r($this->gap, $this->grid);
-
+        return $n;
     }
 
 
