@@ -58,14 +58,15 @@ function generateEmptyGrid(size) {
 
 
 function changeValue(cell) {
-    clearTimeout(timer);
-    timer = setTimeout(sendValues, 3000);
     valuesFilled = 0;
     for (let cell of grid.children) {
         cell.classList.remove("wrong");
         if (cell.innerText !== "") valuesFilled++;
     }
+
     if (cell.classList.contains("static")) return;
+    clearTimeout(timer);
+    timer = setTimeout(sendValues, 3000);
 
     switch (cell.innerText) {
         case "0":
