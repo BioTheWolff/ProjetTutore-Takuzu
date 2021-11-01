@@ -8,6 +8,11 @@
 class GridVerifier
 {
 
+    const MULT_ERR = "MULT";
+    const SHAPE_ERR = "SHAPE";
+    const STABILITY_ERR = "UNSTABLE";
+    const NOERR = "OK";
+
     /**
      * Vérifie que la grille ne viole aucune règle du jeu.
      *
@@ -61,7 +66,7 @@ class GridVerifier
 
                     // erreur multiplicité
                     if ($seen != Adapter::GAP_PHP && $mult >= 3)
-                        return "MULT:" . $d . "," . ($d == 'l' ? $i : $j) . "," . ($d == 'l' ? $j : $i);
+                        return self::format_error(self::MULT_ERR, $d, $i, $j);
 
                     // règle d'apparence
                     if ($n == 1) $c_one++;
@@ -70,15 +75,36 @@ class GridVerifier
                 if (!$is_full) continue;
 
                 // erreur égalité d'apparence
-                if ($c_one != count($grid)/2) return "UNSTABLE:" . $d . "," . $i . "," . $c_one;
+                if ($c_one != count($grid)/2) return self::format_error(self::STABILITY_ERR, $d, $i, $c_one);
 
                 // erreur motif
                 $line = implode("", $line);
-                if (in_array($line, $shape_array)) return "SHAPE:" . $d . "," . $i;
+                if (in_array($line, $shape_array)) return self::format_error(self::SHAPE_ERR, $d, $i);
                 else $shape_array[] = $line;
             }
         }
 
-        return "OK";
+        return self::NOERR;
+    }
+
+    /**
+     * @param string $error the error type
+     * @param string $direction the direction the error was found in
+     * @param int $line the line the error was found in
+     * @param int $other another parameter. Column if MULT, number of ones in line/column if UNSTABLE. Defaults to -1
+     * @return string the formatted error string
+     */
+    private static function format_error(string $error, string $direction, int $line, int $other = -1): string
+    {
+        // invert line and column if the multiplicity is found in columns,
+        // so we follow the pattern "line:column"
+        if ($error == self::MULT_ERR && $direction == "c")
+        {
+            $temp = $line;
+            $line = $other;
+            $other = $temp;
+        }
+
+        return "$error:$direction:$line:$other";
     }
 }
