@@ -28,12 +28,24 @@ class GridSolver
      */
     private $gaps_number;
 
+    /**
+     * The table that contains the number of gaps per line/column.
+     * Follows the structure `['lines' => [...], 'columns' => [...]]`
+     * @var array $gaps_table
+     */
+    private $gaps_table;
+
     private function __construct(array $grid)
     {
         $this->grid = $grid;
         $this->backtrace = [];
         $this->gap = Adapter::GAP_PHP;
-        $this->gaps_number = self::countgaps();
+
+        $this->gaps_table = [
+            'lines' => [],
+            'columns' => []
+        ];
+        self::countgaps();
     }
 
     /**
@@ -42,10 +54,22 @@ class GridSolver
      * @param array $grid the grid to solve
      * @return array the solved grid
      */
-    public static function solveGrid(array $grid): array {
+    public static function solveGrid(array $grid): array
+    {
         $ins = new GridSolver($grid);
         $ins->solve();
         return $ins->grid;
+    }
+
+    /**
+     * Used only for testing
+     *
+     * @param array $grid the grid
+     * @return GridSolver
+     */
+    private static function prepareGrid(array $grid): GridSolver
+    {
+        return new GridSolver($grid);
     }
 
 
@@ -55,17 +79,34 @@ class GridSolver
     {
         while (!$this->filled())
         {
+            // directions
             foreach (['l', 'c'] as $d)
             {
+                // lines
                 for ($i = 0; $i < count($this->grid); $i++)
                 {
+                    // columns
                     for ($j = 0; $j < count($this->grid); $j++)
                     {
 
+                        // skip the "non-gaps" cells
                         if ($this->get($d, $i, $j) != $this->gap) continue;
 
+                        // try to solve using the multiplicity constraint
                         if (($v = $this->check_mult($d, $i, $j)) !== null) $this->fill($d, $i, $j, 1-$v);
 
+                    }
+
+                    // at the end of the line/column
+                    // try to solve using the equal appearance constraint
+                    switch ($this->get_gaps($d, $i))
+                    {
+                        case 1:
+                            // we just need to count the distance to fill it
+                            $this->fill($d, $i,
+                                $this->find_first_candidate($d, $i),
+                                $this->count_ones_distance($d, $i)
+                            );
                     }
                 }
             }
@@ -73,12 +114,23 @@ class GridSolver
     }
 
 
-    // UTILS
+    // UTILS | GETTERS
 
     private function get(string $direction, int $i, int $j): int
     {
         return $direction == 'l' ? $this->grid[$i][$j] : $this->grid[$j][$i];
     }
+
+    private function find_first_candidate(string $direction, int $i): int
+    {
+        for ($counter = 0; $counter < count($this->grid); $counter++)
+        {
+            if ($this->get($direction, $i, $counter) == $this->gap) return $counter;
+        }
+        return -1;
+    }
+
+    // UTILS | FILLERS
 
     private function fill(string $direction, int $i, int $j, int $value)
     {
@@ -91,6 +143,9 @@ class GridSolver
 
         $this->grid[$i][$j] = $value;
         $this->gaps_number--;
+
+        $this->gaps_table['lines'][$i]--;
+        $this->gaps_table['columns'][$j]--;
     }
 
     private function filled(): bool
@@ -98,19 +153,46 @@ class GridSolver
         return $this->gaps_number == 0;
     }
 
-    private function countgaps(): int
+    // UTILS | COUNTERS
+
+    private function countgaps()
     {
         $n = 0;
 
+        // Count the number of gaps per line
+        // Also counts the total number of gaps
         foreach ($this->grid as $line)
         {
+            $lc = 0;
+
             foreach ($line as $item)
             {
-                if ($item == $this->gap) $n++;
+                if ($item == $this->gap) $lc++;
             }
+
+            $n += $lc;
+            $this->gaps_table['lines'][] = $lc;
         }
 
-        return $n;
+        $this->gaps_number = $n;
+
+        // Count the number of gaps per column
+        for ($i = 0; $i < count($this->grid); $i++)
+        {
+            $cc = 0;
+
+            for ($j = 0; $j < count($this->grid); $j++)
+            {
+                if ($this->get('c', $i, $j) == $this->gap) $cc++;
+            }
+
+            $this->gaps_table['columns'][] = $cc;
+        }
+    }
+
+    private function get_gaps(string $direction, int $i)
+    {
+        return $this->gaps_table[$direction == 'c' ? 'columns' : 'lines'][$i];
     }
 
 
@@ -145,5 +227,23 @@ class GridSolver
         );
 
         return $cond ? $c : null;
+    }
+
+    /**
+     * Counts the number of ones in the line/column then returns the distance between the current value and the expected one.
+     * The expected value is `$grid_size/2` (following the equal appearance constraint)
+     *
+     * @param string $direction the direction we are going through the grid with
+     * @param int $i the line/column
+     * @return int the distance from the expected number of ones in the line/column
+     */
+    private function count_ones_distance(string $direction, int $i): int
+    {
+        $n = 0;
+        for ($counter = 0; $counter < count($this->grid); $counter++)
+        {
+            if ($this->get($direction, $i, $counter) == 1) $n++;
+        }
+        return $n;
     }
 }
