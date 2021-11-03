@@ -126,13 +126,14 @@ function alertWin(data) {
 
 // apply colors to the grid to show errors
 function highlightErrors(errors) {
-    let errsplit = errors.split(":")[1].split(",");
-    if (errsplit[0] === "c") {
-        for (let i = parseInt(errsplit[2]); i < size ** 2; i = i + size) {
+    let errsplit = errors.split(":");
+    console.log(errsplit);
+    if (errsplit[1] === "c") {
+        for (let i = parseInt(errsplit[3]); i < size ** 2; i = i + size) {
             cells.item(i).classList.add("wrong");
         }
     } else {
-        for (let i = errsplit[1] * size; i < errsplit[1] * size + size; i++) {
+        for (let i = errsplit[2] * size; i < errsplit[2] * size + size; i++) {
             cells.item(i).classList.add("wrong");
         }
     }
