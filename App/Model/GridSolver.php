@@ -1,5 +1,8 @@
 <?php
 
+require_once 'GridVerifier.php';
+require_once 'Grid.php';
+
 class GridSolver
 {
 
@@ -200,7 +203,7 @@ class GridSolver
 
             // if the grid is filled, try running a verification one last time
             // if it fails (surely because of shape), unstack one hypothesis
-            if ($this->filled() && !GridVerifier::verify(GridVerifier::FORMAT_CHECK_NOERR, $this->grid))
+            while ($this->filled() && !GridVerifier::verify(GridVerifier::FORMAT_CHECK_NOERR, $this->grid))
                 $this->revert_hypothesis_and_apply_opposite();
         }
         // -- END while
@@ -270,7 +273,7 @@ class GridSolver
 
     private function filled(): bool
     {
-        return $this->gaps_number == 0;
+        return $this->gaps_number <= 0;
     }
 
     // UTILS | COUNTERS
@@ -339,11 +342,11 @@ class GridSolver
 
         $cond = (
             // XX_ pattern
-            ($j >= 2 && (($c = self::get($direction, $i, $j-1)) == self::get($direction, $i, $j-2))) ||
+            ($j >= 2 && (($c = self::get($direction, $i, $j-1)) == self::get($direction, $i, $j-2)) && $c != $this->gap) ||
             // X_X pattern
-            ($j >= 1 && $j < $size-1 && (($c =self::get($direction, $i, $j-1)) == self::get($direction, $i, $j+1))) ||
+            ($j >= 1 && $j < $size-1 && (($c =self::get($direction, $i, $j-1)) == self::get($direction, $i, $j+1)) && $c != $this->gap) ||
             // _XX pattern
-            ($j < $size-2 && (($c = self::get($direction, $i, $j+1)) == self::get($direction, $i, $j+2)))
+            ($j < $size-2 && (($c = self::get($direction, $i, $j+1)) == self::get($direction, $i, $j+2)) && $c != $this->gap)
         );
 
         return $cond ? $c : null;
@@ -379,27 +382,39 @@ class GridSolver
         $grid = array_pop($this->backtrace);
 
         $this->grid = $grid->getGrid();
+        $this->gaps_number = $grid->getGapsNumber();
         $this->gaps_table = $grid->getGapsTable();
 
         [$direction, $i, $candidates] = $grid->getHypothesis();
 
         // fill the values according to the OPPOSITE of the hypothesis we just unstacked
-        foreach ($candidates as $el)
-        {
-            [$j, $v] = $el;
-            $this->fill($direction, $i, $j, 1-$v);
-        }
+        foreach ($candidates as $j => $v) $this->fill($direction, $i, $j, 1-$v);
     }
 
     private function stack_hypothesis(string $direction, int $i, array $candidates)
     {
-        $this->backtrace[] = new Grid($this->grid, $this->gaps_table, [$direction, $i, $candidates]);
+        $this->backtrace[] = new Grid($this->grid, $this->gaps_table, $this->gaps_number, [$direction, $i, $candidates]);
 
         // fill the value from the hypothesis
-        foreach ($candidates as $el)
+        foreach ($candidates as $j => $v) $this->fill($direction, $i, $j, $v);
+    }
+
+    private function pretty_print_self()
+    {
+        echo "grid: [\n";
+        foreach ($this->grid as $line)
         {
-            [$j, $v] = $el;
-            $this->fill($direction, $i, $j, $v);
+            echo '  [' . implode(', ', $line) . "]\n";
         }
+        echo "]\n";
+
+        echo "number of gaps: $this->gaps_number\n";
+
+        echo "gaps table: [\n";
+        foreach ($this->gaps_table as $e => $t)
+        {
+            echo "  $e => [" . implode(', ', $t) . "]\n";
+        }
+        echo "]\n";
     }
 }

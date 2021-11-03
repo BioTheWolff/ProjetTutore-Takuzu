@@ -76,4 +76,33 @@ class GridSolverTest extends TestCase
     {
         self::assertEquals($this->expected, GridSolver::solveGrid($this->appearance1Grid));
     }
+
+    public function testSolveGrid()
+    {
+        $fullExpected = [
+            [  0,   0,   1,   1,   0,   0,   1,   1],
+            [  1,   0,   0,   1,   1,   0,   0,   1],
+            [  0,   1,   1,   0,   0,   1,   1,   0],
+            [  1,   0,   1,   0,   1,   1,   0,   0],
+            [  0,   1,   0,   1,   1,   0,   0,   1],
+            [  1,   0,   1,   0,   0,   1,   1,   0],
+            [  1,   1,   0,   0,   1,   0,   0,   1],
+            [  0,   1,   0,   1,   0,   1,   1,   0]
+        ];
+
+        $fullGrid = [
+            [self::G, self::G, self::G, self::G, self::G, self::G, self::G, self::G],
+            [  1, self::G, self::G, self::G, self::G, self::G, self::G, self::G],
+            [self::G, self::G, self::G,   0, self::G,   1, self::G, self::G],
+            [self::G, self::G, self::G,   0, self::G, self::G,   0,   0],
+            [self::G, self::G, self::G, self::G, self::G, self::G,   0, self::G],
+            [  1, self::G, self::G, self::G, self::G, self::G, self::G, self::G],
+            [  1,   1, self::G, self::G, self::G, self::G, self::G, self::G],
+            [self::G, self::G,   0, self::G, self::G, self::G, self::G, self::G]
+        ];
+
+        $actual = GridSolver::solveGrid($fullGrid);
+
+        self::assertEquals($fullExpected, $actual);
+    }
 }

@@ -74,8 +74,8 @@ class GridVerifier
                 for ($j = 0; $j < count($grid[0]); $j++)
                 {
                     $n = ($d == 'l'
-                        ? (array_key_exists("$i:$j", $insertions) ? $insertions["$i:$j"] : $grid[$i][$j])
-                        : (array_key_exists("$j:$i", $insertions) ? $insertions["$j:$i"] : $grid[$j][$i])
+                        ? (!is_null($insertions) && array_key_exists("$i:$j", $insertions) ? $insertions["$i:$j"] : $grid[$i][$j])
+                        : (!is_null($insertions) && array_key_exists("$j:$i", $insertions) ? $insertions["$j:$i"] : $grid[$j][$i])
                     );
                     $line[] = $n;
 
