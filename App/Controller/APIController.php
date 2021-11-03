@@ -14,7 +14,7 @@ class APIController
     /**
      * Route permettant de vérifier que la grille est correcte
      *
-     * @see GridVerifier::partial_verify
+     * @see GridVerifier::verify
      */
     public static function check()
     {
@@ -22,7 +22,7 @@ class APIController
             http_response_code(400);
             echo "NOK";
         }
-        else echo(GridVerifier::partial_verify(Adapter::message_to_grid($_GET['message'])));
+        else echo(GridVerifier::verify(GridVerifier::FORMAT_MESSAGE, Adapter::message_to_grid($_GET['message'])));
     }
 
     /**
