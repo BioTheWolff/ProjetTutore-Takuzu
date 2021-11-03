@@ -35,6 +35,13 @@ class GridSolver
      */
     private $gaps_table;
 
+    /**
+     * Is used to see if the solver stalls (meaning no constraints are matching).
+     * We need to pick at random and diverge
+     * @var bool $filled_this_sweep
+     */
+    private $filled_this_sweep;
+
     private function __construct(array $grid)
     {
         $this->grid = $grid;
@@ -79,6 +86,7 @@ class GridSolver
     {
         while (!$this->filled())
         {
+            $this->filled_this_sweep = false;
             // directions
             foreach (['l', 'c'] as $d)
             {
@@ -130,21 +138,72 @@ class GridSolver
 
                                 case 1:
                                     // this is where the paths diverge
-                                    // possibilities are 1/0 and 0/1 (in order)
+                                    // possibilities are 0/1 and 1/0 (in order)
+
+                                    // we grab the two possible candidates
+                                    $c1 = $this->find_first_candidate($d, $i);
+                                    $c2 = $this->find_second_candidate($d, $i);
 
                                     // we test both options
-                                    // TODO: FILL THAT EMPTY SPACE
+                                    $zero_one = $this->verify_with_values($d, $i, [$c1 => 0, $c2 => 1]);
+                                    $one_zero = $this->verify_with_values($d, $i, [$c1 => 1, $c2 => 0]);
+
+                                    if ($zero_one && $one_zero)
+                                    {
+                                        // both are plausible, we diverge by trying one of both
+                                        $this->stack_hypothesis($d, $i, [$c1 => 0, $c2 => 1]);
+                                    }
+                                    else if ($zero_one && !$one_zero)
+                                    {
+                                        // we apply the change
+                                        $this->fill($d, $i, $c1, 0);
+                                        $this->fill($d, $i, $c2, 1);
+                                    }
+                                    else if ($one_zero && !$zero_one)
+                                    {
+                                        // we apply the change
+                                        $this->fill($d, $i, $c1, 1);
+                                        $this->fill($d, $i, $c2, 0);
+                                    }
+                                    else
+                                    {
+                                        // none are possible, it seems this is a dead end
+                                        // we un-stack one hypothesis (we "go back in time")
+                                        $this->revert_hypothesis_and_apply_opposite();
+                                    }
+
                                     break;
 
                             }
                             break;
-
-                        default:
-                            break;
                     }
+                    // -- END "after line/column"
                 }
+                // -- END lines
             }
+            // -- END directions
+
+            // if nothing was filled in this sweep, we pick at "random" and diverge
+            if (!$this->filled_this_sweep && !$this->filled())
+            {
+                // find the first candidate in the entire grid
+                $i = 0;
+                do $c = $this->find_first_candidate('l', ++$i);
+                while ($c == -1);
+
+                // try to assign it a value, if it doesn't work then do the opposite
+                if ($this->verify_with_values('l', $i, [$c => 1]))
+                    $this->stack_hypothesis('l', $i, [$c => 1]);
+                else
+                    $this->stack_hypothesis('l', $i, [$c => 0]);
+            }
+
+            // if the grid is filled, try running a verification one last time
+            // if it fails (surely because of shape), unstack one hypothesis
+            if ($this->filled() && !GridVerifier::verify(GridVerifier::FORMAT_CHECK_NOERR, $this->grid))
+                $this->revert_hypothesis_and_apply_opposite();
         }
+        // -- END while
     }
 
 
@@ -157,7 +216,18 @@ class GridSolver
 
     private function find_first_candidate(string $direction, int $i): int
     {
+        if ($this->get_gaps($direction, $i) == 0) return -1;
         for ($counter = 0; $counter < count($this->grid); $counter++)
+        {
+            if ($this->get($direction, $i, $counter) == $this->gap) return $counter;
+        }
+        return -1;
+    }
+
+    private function find_second_candidate(string $direction, int $i): int
+    {
+        if ($this->get_gaps($direction, $i) == 0) return -1;
+        for ($counter = $this->find_first_candidate($direction, $i)+1; $counter < count($this->grid); $counter++)
         {
             if ($this->get($direction, $i, $counter) == $this->gap) return $counter;
         }
@@ -180,11 +250,22 @@ class GridSolver
 
         $this->gaps_table['lines'][$i]--;
         $this->gaps_table['columns'][$j]--;
+
+        $this->filled_this_sweep = true;
     }
 
     private function fill_first_candidate(string $direction, int $i, int $value)
     {
         $this->fill($direction, $i, $this->find_first_candidate($direction, $i), $value);
+    }
+
+    private function verify_with_values(string $direction, int $i, array $candidates): bool
+    {
+        return GridVerifier::CODE_NOERR == GridVerifier::verify(
+                GridVerifier::FORMAT_CODE,
+                $this->grid,
+                Adapter::insertions_solver_to_verifier($direction, $i, $candidates)
+            );
     }
 
     private function filled(): bool
@@ -284,5 +365,41 @@ class GridSolver
             if ($this->get($direction, $i, $counter) == 1) $n++;
         }
         return abs($n - count($this->grid)/2);
+    }
+
+
+    // BACKTRACKING
+
+    private function revert_hypothesis_and_apply_opposite()
+    {
+        if (empty($this->backtrace))
+            throw new RuntimeException("Cannot unstack from an empty backtrace.");
+
+        /** @var Grid $grid */
+        $grid = array_pop($this->backtrace);
+
+        $this->grid = $grid->getGrid();
+        $this->gaps_table = $grid->getGapsTable();
+
+        [$direction, $i, $candidates] = $grid->getHypothesis();
+
+        // fill the values according to the OPPOSITE of the hypothesis we just unstacked
+        foreach ($candidates as $el)
+        {
+            [$j, $v] = $el;
+            $this->fill($direction, $i, $j, 1-$v);
+        }
+    }
+
+    private function stack_hypothesis(string $direction, int $i, array $candidates)
+    {
+        $this->backtrace[] = new Grid($this->grid, $this->gaps_table, [$direction, $i, $candidates]);
+
+        // fill the value from the hypothesis
+        foreach ($candidates as $el)
+        {
+            [$j, $v] = $el;
+            $this->fill($direction, $i, $j, $v);
+        }
     }
 }

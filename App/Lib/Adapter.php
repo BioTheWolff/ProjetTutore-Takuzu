@@ -79,22 +79,21 @@ class Adapter
     /**
      * Translates the solver array format to pass it to GridVerifier.
      *
-     * Input format is `[[direction, i, j, value], ...]`
+     * Input format is `[j => value, ...]`
      *
      * Output format is `["line:column" => value, ...]`
      *
      * @see GridSolver::solve
      * @see GridVerifier::verify
-     * @param array $solver the solver array.
      */
-    public static function insertions_solver_to_verifier(array $solver): array
+    public static function insertions_solver_to_verifier(string $direction, int $i, array $candidates): array
     {
         $res = [];
 
-        foreach ($solver as $item)
+        foreach ($candidates as $item)
         {
-            [$d, $i, $j, $v] = $item;
-            $res[$d == 'l' ? "$i:$j" : "$j:$i"] = $v;
+            [$j, $v] = $item;
+            $res[$direction == 'l' ? "$i:$j" : "$j:$i"] = $v;
         }
 
         return $res;

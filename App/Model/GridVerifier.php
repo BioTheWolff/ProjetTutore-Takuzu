@@ -11,11 +11,12 @@ class GridVerifier
     const FORMAT_CODE = 100;
     const FORMAT_ARRAY = 200;
     const FORMAT_MESSAGE = 300;
+    const FORMAT_CHECK_NOERR = 400;
 
-    private static $CODE_NOERR = 0;
-    private static $CODE_MULT = 1;
-    private static $CODE_STABILITY = 2;
-    private static $CODE_SHAPE = 3;
+    const CODE_NOERR = 0;
+    const CODE_MULT = 1;
+    const CODE_STABILITY = 2;
+    const CODE_SHAPE = 3;
 
     private static $MESSAGE_NOERR = "OK";
     private static $MESSAGE_MULT = "MULT";
@@ -35,6 +36,9 @@ class GridVerifier
 
             case self::FORMAT_MESSAGE:
                 return self::format_message($res);
+
+            case self::FORMAT_CHECK_NOERR:
+                return self::CODE_NOERR == $res[0];
 
             default:
                 throw new RuntimeException("Unrecognised verifier format.");
@@ -93,7 +97,7 @@ class GridVerifier
 
                     // erreur multiplicité
                     if ($seen != Adapter::GAP_PHP && $mult >= 3)
-                        return [self::$CODE_MULT, $d, $i, $j];
+                        return [self::CODE_MULT, $d, $i, $j];
 
                     // règle d'apparence
                     if ($n == 1) $c_one++;
@@ -102,16 +106,16 @@ class GridVerifier
                 if (!$is_full) continue;
 
                 // erreur égalité d'apparence
-                if ($c_one != count($grid)/2) return [self::$CODE_STABILITY, $d, $i, $c_one];
+                if ($c_one != count($grid)/2) return [self::CODE_STABILITY, $d, $i, $c_one];
 
                 // erreur motif
                 $line = implode("", $line);
-                if (in_array($line, $shape_array)) return [self::$CODE_SHAPE, $d, $i];
+                if (in_array($line, $shape_array)) return [self::CODE_SHAPE, $d, $i];
                 else $shape_array[] = $line;
             }
         }
 
-        return [self::$CODE_NOERR];
+        return [self::CODE_NOERR];
     }
 
     private static function format_message(array $result): string
@@ -120,14 +124,14 @@ class GridVerifier
 
         switch ($code)
         {
-            case self::$CODE_NOERR:
+            case self::CODE_NOERR:
                 return self::$MESSAGE_NOERR;
 
-            case self::$CODE_SHAPE:
+            case self::CODE_SHAPE:
                 return self::format_error($code, $result[1], $result[2]);
 
-            case self::$CODE_STABILITY:
-            case self::$CODE_MULT:
+            case self::CODE_STABILITY:
+            case self::CODE_MULT:
                 return self::format_error($code, $result[1], $result[2], $result[3]);
 
             default:
@@ -135,17 +139,17 @@ class GridVerifier
         }
     }
 
-    private static function get_message_from_code(int $code)
+    private static function get_message_from_code(int $code): string
     {
         switch ($code)
         {
-            case self::$CODE_NOERR:
+            case self::CODE_NOERR:
                 return self::$MESSAGE_NOERR;
-            case self::$CODE_MULT:
+            case self::CODE_MULT:
                 return self::$MESSAGE_MULT;
-            case self::$CODE_STABILITY:
+            case self::CODE_STABILITY:
                 return self::$MESSAGE_STABILITY;
-            case self::$CODE_SHAPE:
+            case self::CODE_SHAPE:
                 return self::$MESSAGE_SHAPE;
 
             default:
@@ -164,7 +168,7 @@ class GridVerifier
     {
         // invert line and column if the multiplicity is found in columns,
         // so we follow the pattern "line:column"
-        if ($code == self::$CODE_MULT && $direction == "c")
+        if ($code == self::CODE_MULT && $direction == "c")
         {
             $temp = $line;
             $line = $other;
