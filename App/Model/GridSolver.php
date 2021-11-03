@@ -101,12 +101,46 @@ class GridSolver
                     // try to solve using the equal appearance constraint
                     switch ($this->get_gaps($d, $i))
                     {
+                        case 0:
+                            // skip if we have no gaps in this line/column
+                            break;
+
                         case 1:
                             // we just need to count the distance to fill it
                             $this->fill($d, $i,
                                 $this->find_first_candidate($d, $i),
                                 $this->count_ones_distance($d, $i)
                             );
+                            break;
+
+                        case 2:
+                            switch ($this->count_ones_distance($d, $i))
+                            {
+                                case 2:
+                                    // missing two "1" from the line
+                                    $this->fill_first_candidate($d, $i, 1);
+                                    $this->fill_first_candidate($d, $i, 1);
+                                    break;
+
+                                case 0:
+                                    // missing two "0" from the line
+                                    $this->fill_first_candidate($d, $i, 0);
+                                    $this->fill_first_candidate($d, $i, 0);
+                                    break;
+
+                                case 1:
+                                    // this is where the paths diverge
+                                    // possibilities are 1/0 and 0/1 (in order)
+
+                                    // we test both options
+                                    // TODO: FILL THAT EMPTY SPACE
+                                    break;
+
+                            }
+                            break;
+
+                        default:
+                            break;
                     }
                 }
             }
@@ -146,6 +180,11 @@ class GridSolver
 
         $this->gaps_table['lines'][$i]--;
         $this->gaps_table['columns'][$j]--;
+    }
+
+    private function fill_first_candidate(string $direction, int $i, int $value)
+    {
+        $this->fill($direction, $i, $this->find_first_candidate($direction, $i), $value);
     }
 
     private function filled(): bool
