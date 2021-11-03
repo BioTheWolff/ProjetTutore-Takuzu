@@ -1,5 +1,6 @@
 const grid = document.getElementById("grid");
 
+// return grid size from url
 function getSize() {
     let url = window.location.href;
     let pattern = /((?<=size=)[0-9]+)/g;
@@ -11,6 +12,7 @@ function getSize() {
     }
 }
 
+// fetch grid from php api
 function downloadAndParseGrid() {
     fetch("?action=api-generate&size=" + getSize())
         .then(response => response.text())
@@ -18,7 +20,20 @@ function downloadAndParseGrid() {
         .catch((error) => alert("Impossible de charger la grille: " + error))
 }
 
+// create an empty html grid
+function generateEmptyGrid(size) {
+    grid.style.setProperty('--grid-size', size.toString());
+    for (let i = 0; i < size ** 2; i++) {
+        let cell = document.createElement("div");
+        cell.innerText = "";
+        cell.setAttribute("onclick", "changeValue(this)");
+        cell.id = i.toString();
+        cell.classList.add("cell", "empty")
+        grid.appendChild(cell);
+    }
+}
 
+// fill-in values in the grid
 function setupGrid(size, content) {
     generateEmptyGrid(size);
 
@@ -44,19 +59,7 @@ function setupGrid(size, content) {
     }
 }
 
-function generateEmptyGrid(size) {
-    grid.style.setProperty('--grid-size', size.toString());
-    for (let i = 0; i < size ** 2; i++) {
-        let cell = document.createElement("div");
-        cell.innerText = "";
-        cell.setAttribute("onclick", "changeValue(this)");
-        cell.id = i.toString();
-        cell.classList.add("cell", "empty")
-        grid.appendChild(cell);
-    }
-}
-
-
+// change value of a cell when clicked
 function changeValue(cell) {
     valuesFilled = 0;
     for (let cell of grid.children) {
@@ -88,6 +91,7 @@ function changeValue(cell) {
     }
 }
 
+// return values from the grid
 function getValues() {
     let size = grid.style.getPropertyValue('--grid-size');
     let values = size.toString().concat(":");
@@ -100,6 +104,7 @@ function getValues() {
     return values;
 }
 
+// send values to the php api
 function sendValues() {
     fetch("?action=api-check&message=" + getValues())
         .then(response => response.text())
@@ -107,6 +112,7 @@ function sendValues() {
         .catch((error) => alert("Impossible de charger la grille: " + error))
 }
 
+// show if game is won or if there are errors
 function alertWin(data) {
     if (data === "OK") {
         if (parseInt(valuesFilled) === size ** 2) alert("Bravo");
@@ -118,14 +124,16 @@ function alertWin(data) {
     }
 }
 
+// apply colors to the grid to show errors
 function highlightErrors(errors) {
-    let errsplit = errors.split(":")[1].split(",");
-    if (errsplit[0] === "c") {
-        for (let i = parseInt(errsplit[2]); i < size ** 2; i = i + size) {
+    let errsplit = errors.split(":");
+    console.log(errsplit);
+    if (errsplit[1] === "c") {
+        for (let i = parseInt(errsplit[3]); i < size ** 2; i = i + size) {
             cells.item(i).classList.add("wrong");
         }
     } else {
-        for (let i = errsplit[1] * size; i < errsplit[1] * size + size; i++) {
+        for (let i = errsplit[2] * size; i < errsplit[2] * size + size; i++) {
             cells.item(i).classList.add("wrong");
         }
     }
