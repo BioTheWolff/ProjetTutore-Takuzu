@@ -11,45 +11,40 @@ class GridSolverTest extends TestCase
 
     const G = Adapter::GAP_PHP;
 
+    private $expected = [
+        [1, 0, 1, 0],
+        [1, 1, 0, 0],
+        [0, 1, 0, 1],
+        [0, 0, 1, 1]
+    ];
+
+    private $multGrid = [
+        [1, self::G, 1, 0],
+        [1, 1, self::G, 0],
+        [0, 1, self::G, 1],
+        [0, 0, self::G, 1]
+    ];
+
+    private $appearance1Grid = [
+        [1, self::G, 1, self::G],
+        [1, 1, self::G, 0],
+        [0, 1, self::G, 1],
+        [self::G, 0, self::G, 1]
+    ];
+
     public function testSolveFullGrid()
     {
-        $grid = [
-            [1, 0, 1, 0],
-            [1, 1, 0, 0],
-            [0, 1, 0, 1],
-            [0, 0, 1, 1]
-        ];
 
-        self::assertEquals($grid, GridSolver::solveGrid($grid));
+        self::assertEquals($this->expected, GridSolver::solveGrid($this->multGrid));
     }
 
     public function testSolveGridMultOnly()
     {
-        $expected = [
-            [1, 0, 1, 0],
-            [1, 1, 0, 0],
-            [0, 1, 0, 1],
-            [0, 0, 1, 1]
-        ];
-        $grid = [
-            [1, self::G, 1, 0],
-            [1, 1, self::G, 0],
-            [0, 1, self::G, 1],
-            [0, 0, self::G, 1]
-        ];
-
-        self::assertEquals($expected, GridSolver::solveGrid($grid));
+        self::assertEquals($this->expected, GridSolver::solveGrid($this->multGrid));
     }
 
     public function testGapsTable()
     {
-        $grid = [
-            [1, self::G, 1, 0],
-            [1, 1, self::G, 0],
-            [0, 1, self::G, 1],
-            [0, 0, self::G, 1]
-        ];
-
         $table = [
             'lines' => [1, 1, 1, 1],
             'columns' => [0, 1, 3, 0],
@@ -69,11 +64,16 @@ class GridSolverTest extends TestCase
         $tableReflection = new ReflectionProperty(GridSolver::class, 'gaps_table');
         $tableReflection->setAccessible(true);
 
-        $object = $constructorReflection->invokeArgs(null, [$grid]);
+        $object = $constructorReflection->invokeArgs(null, [$this->multGrid]);
 
         self::assertEquals($table, $tableReflection->getValue($object));
         $solveReflection->invoke($object);
         self::assertEquals($emptyTable, $tableReflection->getValue($object));
 
+    }
+
+    public function testSolveGridDistance1()
+    {
+        self::assertEquals($this->expected, GridSolver::solveGrid($this->appearance1Grid));
     }
 }

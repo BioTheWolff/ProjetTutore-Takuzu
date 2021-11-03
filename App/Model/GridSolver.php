@@ -244,6 +244,6 @@ class GridSolver
         {
             if ($this->get($direction, $i, $counter) == 1) $n++;
         }
-        return $n;
+        return abs($n - count($this->grid)/2);
     }
 }
