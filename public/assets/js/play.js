@@ -1,3 +1,4 @@
+// General elements of the document
 const grid = document.getElementById("grid");
 const backwardBtn = document.getElementById("backward");
 const forwardBtn = document.getElementById("forward");
@@ -5,10 +6,9 @@ const forwardBtn = document.getElementById("forward");
 // return grid size from url
 function getSize() {
     let url = window.location.href;
-    let pattern = /((?<=size=)[0-9]+)/g;
-    let res = url.match(pattern);
+    let res = url.match(/((?<=size=)[0-9]+)/g);
     if (res.toString() === "") {
-        return 8; // valeur par défaut
+        return 8; // taille par défaut
     } else {
         return parseInt(res.toString());
     }
@@ -35,8 +35,17 @@ function generateEmptyGrid(size) {
     }
 }
 
+function countValuesFilled() {
+    valuesFilled = 0;
+    for (let cell of grid.children) {
+        cell.classList.remove("wrong");
+        if (cell.innerText !== "") valuesFilled++;
+    }
+}
+
 // fill-in values in the grid
 function fillGrid(size, content, init = false) {
+    // if no grid found, generate an empty one
     if (grid.children.length == 0) {
         generateEmptyGrid(size);
     }
@@ -44,7 +53,14 @@ function fillGrid(size, content, init = false) {
     /** @type {string[]} **/
     let arr = Array.from(content);
 
-    // TODO: do something about statics, maybe new function for init grid or if
+    // count values filled & reset wrong values
+    countValuesFilled();
+
+    // reset timer
+    clearTimeout(timer);
+    timer = setTimeout(sendValues, 3000);
+
+    // init: fills grid with locked values
     if (init == true) {
         for (let cell of grid.children) {
             switch (arr[cell.id]) {
@@ -64,6 +80,7 @@ function fillGrid(size, content, init = false) {
         }
     } else {
         for (let cell of grid.children) {
+            // change values of unlocked fields
             if (!cell.classList.contains("static"))
                 switch (arr[cell.id]) {
                     case "_":
@@ -88,18 +105,20 @@ function fillGrid(size, content, init = false) {
 
 // change value of a cell when clicked
 function changeValue(cell) {
-    valuesFilled = 0;
-    for (let cell of grid.children) {
-        cell.classList.remove("wrong");
-        if (cell.innerText !== "") valuesFilled++;
-    }
-
+    // locked cells can't be changed
     if (cell.classList.contains("static")) return;
+
+    // count values filled & reset wrong values
+    countValuesFilled();
+
+    // reset timer
     clearTimeout(timer);
     timer = setTimeout(sendValues, 3000);
 
-    currGrid = getValues();
-    backwardGrids.push(currGrid);
+    // add moves to history
+    backwardGrids.push(getValues());
+    backwardBtn.disabled = false;
+
     switch (cell.innerText) {
         case "0":
             cell.classList.replace("zero", "one")
@@ -115,7 +134,6 @@ function changeValue(cell) {
             cell.classList.replace("empty", "zero")
             cell.innerText = "0";
     }
-    backwardBtn.disabled = false;
 }
 
 // return values from the grid
@@ -128,7 +146,7 @@ function getValues() {
     return values;
 }
 
-// return gridd with values and proper formating for api
+// return grid with values and proper formating for api
 function getGrid() {
     let size = grid.style.getPropertyValue('--grid-size');
     let gridStr = size.toString().concat(":").concat(getValues());
@@ -200,9 +218,10 @@ function forward() {
     if (forwardGrids.length == 0) forwardBtn.disabled = true;
 }
 
-let valuesFilled = 0;
+// general values bound to be changed
 let cells = document.getElementsByClassName("cell");
 let size = getSize();
+let valuesFilled = 0;
 
 // timer for sending grids to api
 let timer = setTimeout(sendValues, 3000);
@@ -213,7 +232,7 @@ let backwardGrids = [];
 let forwardGrids = [];
 let currGrid = "";
 
-// buttons disabled
+// buttons disabled by default
 backwardBtn.disabled = true;
 forwardBtn.disabled = true;
 
