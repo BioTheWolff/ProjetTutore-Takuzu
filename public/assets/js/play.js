@@ -18,11 +18,36 @@ function getSize() {
 function downloadAndParseGrid() {
     fetch("?action=api-generate&size=" + getSize())
         .then(response => response.text())
-        .then(data => fillGrid(data.split(":")[0], data.split(":")[1], true))
+        .then(data => setupGrid(data.split(":")[0], data.split(":")[1]))
         .catch((error) => alert("Impossible de charger la grille: " + error))
 }
 
-// create an empty html grid
+
+function setupGrid(size, content) {
+    generateEmptyGrid(size);
+
+    /** @type {string[]} **/
+    let arr = Array.from(content);
+
+    for (let cell of grid.children) {
+        switch (arr[cell.id]) {
+            case "_":
+                break;
+            case "0":
+                cell.classList.replace("empty", "zero");
+                cell.classList.add("static");
+                cell.textContent = "0";
+                break;
+
+            case "1":
+                cell.classList.replace("empty", "one");
+                cell.classList.add("static");
+                cell.textContent = "1";
+                break;
+        }
+    }
+}
+
 function generateEmptyGrid(size) {
     grid.style.setProperty('--grid-size', size.toString());
     for (let i = 0; i < size ** 2; i++) {
@@ -35,134 +60,58 @@ function generateEmptyGrid(size) {
     }
 }
 
-function countValuesFilled() {
+
+function changeValue(cell) {
     valuesFilled = 0;
     for (let cell of grid.children) {
         cell.classList.remove("wrong");
         if (cell.innerText !== "") valuesFilled++;
     }
-}
 
-// fill-in values in the grid
-function fillGrid(size, content, init = false) {
-    // if no grid found, generate an empty one
-    if (grid.children.length == 0) {
-        generateEmptyGrid(size);
-    }
-
-    /** @type {string[]} **/
-    let arr = Array.from(content);
-
-    // count values filled & reset wrong values
-    countValuesFilled();
-
-    // reset timer
-    clearTimeout(timer);
-    timer = setTimeout(sendValues, 3000);
-
-    // init: fills grid with locked values
-    if (init == true) {
-        for (let cell of grid.children) {
-            switch (arr[cell.id]) {
-                case "_":
-                    break;
-                case "0":
-                    cell.classList.replace("empty", "zero");
-                    cell.classList.add("static");
-                    cell.textContent = "0";
-                    break;
-                case "1":
-                    cell.classList.replace("empty", "one");
-                    cell.classList.add("static");
-                    cell.textContent = "1";
-                    break;
-            }
-        }
-    } else {
-        for (let cell of grid.children) {
-            // change values of unlocked fields
-            if (!cell.classList.contains("static"))
-                switch (arr[cell.id]) {
-                    case "_":
-                        cell.classList.replace("zero", "empty");
-                        cell.classList.replace("one", "empty");
-                        cell.textContent = "";
-                        break;
-                    case "0":
-                        cell.classList.replace("empty", "zero");
-                        cell.classList.replace("one", "zero");
-                        cell.textContent = "0";
-                        break;
-                    case "1":
-                        cell.classList.replace("empty", "one");
-                        cell.classList.replace("zero", "one");
-                        cell.textContent = "1";
-                        break;
-                }
-        }
-    }
-}
-
-// change value of a cell when clicked
-function changeValue(cell) {
-    // locked cells can't be changed
     if (cell.classList.contains("static")) return;
-
-    // count values filled & reset wrong values
-    countValuesFilled();
-
-    // reset timer
     clearTimeout(timer);
     timer = setTimeout(sendValues, 3000);
-
-    // add moves to history
-    backwardGrids.push(getValues());
-    backwardBtn.disabled = false;
 
     switch (cell.innerText) {
         case "0":
             cell.classList.replace("zero", "one")
             cell.innerText = "1";
+            made_action(cell.id, "0", "1");
             break;
 
         case "1":
             cell.classList.replace("one", "empty")
             cell.innerText = "";
+            made_action(cell.id, "1", "_");
             break;
 
         default:
             cell.classList.replace("empty", "zero")
             cell.innerText = "0";
+            made_action(cell.id, "", "0");
     }
 }
 
-// return values from the grid
 function getValues() {
-    let values = "";
+    let size = grid.style.getPropertyValue('--grid-size');
+    let values = size.toString().concat(":");
+
     for (let i = 0; i < size ** 2; i++) {
         let cell_value = (cells.item(i) == null ? "" : cells.item(i).innerText);
         values = values.concat(cell_value === "" ? "_" : cell_value);
     }
+    console.log("\n" + "📨 GRID:   " + values);
     return values;
-}
-
-// return grid with values and proper formating for api
-function getGrid() {
-    let size = grid.style.getPropertyValue('--grid-size');
-    let gridStr = size.toString().concat(":").concat(getValues());
-    console.log("\n" + "📨 GRID:   " + gridStr);
-    return gridStr;
 }
 
 // send values to the php api
 function sendValues() {
-    fetch("?action=api-check&message=" + getGrid())
+    fetch("?action=api-check&message=" + getValues())
         .then(response => response.text())
         .then(data => alertWin(data))
         .catch((error) => alert("Impossible de charger la grille: " + error))
 }
 
-// show if game is won or if there are errors
 function alertWin(data) {
     if (data === "OK") {
         if (parseInt(valuesFilled) === size ** 2) alert("Bravo");
@@ -188,34 +137,65 @@ function highlightErrors(errors) {
     }
 }
 
+function made_action(cell_id, old_value, new_value) {
+    history.push([cell_id, old_value, new_value]);
+    history_pointer++;
+    refresh_buttons();
+}
+
 // backward in grids history
 function backward() {
-    // add previous grid to forwardGrids
-    forwardBtn.disabled = false;
-    currGrid = getValues();
-    forwardGrids.push(currGrid);
+    // cannot read deeper into history
+    if (history_pointer < 0) return;
 
-    // update currGrid by taking latest grid from backwardGrids
-    currGrid = backwardGrids.pop();
-    fillGrid(size, currGrid);
+    // decrease pointer to "go back in time"
+    // then revert old value
+    history_pointer--;
+    let change = history[history_pointer];
 
-    // disable btn if backward is impossible
-    if (backwardGrids.length == 0) backwardBtn.disabled = true;
+    set_value_for_cell(change[0], change[1]);
+
+    refresh_buttons();
 }
 
 // forward in grids history
 function forward() {
-    // add previous grid to backwardGrids
-    backwardBtn.disabled = false;
-    currGrid = getValues();
-    backwardGrids.push(currGrid);
+    // cannot read further into history
+    if (history_pointer > history.length-1) return;
 
-    // update currGrid by taking latest grid from backwardGrids
-    currGrid = forwardGrids.pop();
-    fillGrid(size, currGrid);
+    // re-apply change then increase pointer
+    // we are working our way back to "present time"
+    let change = history[history_pointer];
+    set_value_for_cell(change[0], change[2]);
+    history_pointer++;
 
-    // disable btn if forward is impossible
-    if (forwardGrids.length == 0) forwardBtn.disabled = true;
+    refresh_buttons();
+}
+
+function refresh_buttons() {
+    backwardBtn.disabled = history_pointer <= 0;
+    forwardBtn.disabled = history_pointer > history.length-1;
+}
+
+function set_value_for_cell(cell_id, value) {
+    let cell = document.getElementById(cell_id)
+    cell.innerText = value;
+
+    switch (value) {
+        case '0':
+            cell.classList.remove("one", "empty")
+            cell.classList.add("zero")
+            break;
+
+        case '1':
+            cell.classList.remove("zero", "empty")
+            cell.classList.add("one")
+            break;
+
+        default:
+            cell.classList.remove("one", "zero")
+            cell.classList.add("empty")
+    }
 }
 
 // general values bound to be changed
@@ -228,9 +208,8 @@ let timer = setTimeout(sendValues, 3000);
 clearTimeout(timer);
 
 // grid history
-let backwardGrids = [];
-let forwardGrids = [];
-let currGrid = "";
+let history = [];
+let history_pointer = 0;
 
 // buttons disabled by default
 backwardBtn.disabled = true;
