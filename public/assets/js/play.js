@@ -138,6 +138,12 @@ function highlightErrors(errors) {
 }
 
 function made_action(cell_id, old_value, new_value) {
+    if (!forwardBtn.disabled) {
+        // we are in the past time (not at the last action made)
+        // rewiring the history
+        history = history.slice(0, history_pointer);
+    }
+
     history.push([cell_id, old_value, new_value]);
     history_pointer++;
     refresh_buttons();
