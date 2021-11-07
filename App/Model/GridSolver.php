@@ -27,10 +27,11 @@ class GridSolver
      * @param array $grid the grid to solve
      * @return array the solved grid
      */
-    public static function solveGrid(array $grid): array {
+    public static function solveGrid(array $grid): string
+    {
         $ins = new GridSolver($grid);
         $ins->solve();
-        return $ins->grid;
+        return Adapter::grid_to_message($ins->grid);
     }
 
 
@@ -38,13 +39,11 @@ class GridSolver
     {
         // FIXME dummy function that fills the grid with 0s ; THIS IS A PLACEHOLDER
 
-        for ($i = 0; $i < count($this->grid); $i++)
-        {
-            for ($j = 0; $j < count($this->grid); $j++)
-            {
+        for ($i = 0; $i < count($this->grid); $i++) {
+            for ($j = 0; $j < count($this->grid); $j++) {
                 $this->grid[$i][$j] = 0;
             }
         }
     }
-
 }
+
