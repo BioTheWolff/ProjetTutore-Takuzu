@@ -2,6 +2,7 @@
 const grid = document.getElementById("grid");
 const backwardBtn = document.getElementById("backward");
 const forwardBtn = document.getElementById("forward");
+const soluceBtn = document.getElementById("soluce");
 
 // return grid size from url
 function getSize() {
@@ -222,9 +223,30 @@ function set_value_for_cell(cell_id, value) {
     }
 }
 
-// display the soluce for the current grid
+// get the soluce from the php api
 function solve() {
+    fetch("?action=api-solve&message=" + getValues())
+        .then(response => response.text())
+        .then(data => displaySoluce(data))
+        .catch((error) => alert("Impossible de charger la solution : " + error))
+}
 
+// display the soluce for the current grid
+function displaySoluce(data) {
+    console.log("⭐ SOLUTION: " + data);
+    let sol = data.split(":")[1];
+    let i = 0;
+    for (let cell of grid.children) {
+        cell.classList.remove("wrong");
+        cell.classList.add("static");
+        cell.style = "background-color:#f2de02"
+        cell.textContent = sol[i];
+        i++;
+    }
+    // disable all buttons
+    soluceBtn.disabled = true;
+    backwardBtn.disabled = true;
+    forwardBtn.disabled = true;
 }
 
 // general values bound to be changed

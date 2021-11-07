@@ -2,6 +2,7 @@
 
 require_once(Path::get_path("l", "Adapter"));
 require_once(Path::get_path("m", "GridVerifier"));
+require_once(Path::get_path("m", "GridSolver"));
 require_once(Path::get_path("l", "Douane"));
 
 
@@ -21,8 +22,7 @@ class APIController
         if (!Douane::message($_GET['message'] ?? "")) {
             http_response_code(400);
             echo "NOK";
-        }
-        else echo(GridVerifier::partial_verify(Adapter::message_to_grid($_GET['message'])));
+        } else echo (GridVerifier::partial_verify(Adapter::message_to_grid($_GET['message'])));
     }
 
     /**
@@ -74,7 +74,7 @@ class APIController
                 ];
         }
 
-        echo(Adapter::grid_to_message($grid));
+        echo (Adapter::grid_to_message($grid));
     }
 
     public static function solve()
@@ -82,8 +82,7 @@ class APIController
         if (!Douane::message($_GET['message'] ?? "")) {
             http_response_code(400);
             echo "NOK";
-        }
-        else echo(GridSolver::solveGrid(Adapter::message_to_grid($_GET['message'])));
+        } else echo (GridSolver::solveGrid(Adapter::message_to_grid($_GET['message'])));
     }
-
 }
+
