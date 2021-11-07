@@ -60,15 +60,21 @@ function generateEmptyGrid(size) {
     }
 }
 
-
-function changeValue(cell) {
+function countValuesFilled() {
     valuesFilled = 0;
     for (let cell of grid.children) {
         cell.classList.remove("wrong");
         if (cell.innerText !== "") valuesFilled++;
     }
+}
+
+function changeValue(cell) {
 
     if (cell.classList.contains("static")) return;
+
+    // count values filled & reset wrong values
+    countValuesFilled();
+
     clearTimeout(timer);
     timer = setTimeout(sendValues, 3000);
 
@@ -167,7 +173,7 @@ function backward() {
 // forward in grids history
 function forward() {
     // cannot read further into history
-    if (history_pointer > history.length-1) return;
+    if (history_pointer > history.length - 1) return;
 
     // re-apply change then increase pointer
     // we are working our way back to "present time"
@@ -180,12 +186,17 @@ function forward() {
 
 function refresh_buttons() {
     backwardBtn.disabled = history_pointer <= 0;
-    forwardBtn.disabled = history_pointer > history.length-1;
+    forwardBtn.disabled = history_pointer > history.length - 1;
 }
 
 function set_value_for_cell(cell_id, value) {
     let cell = document.getElementById(cell_id)
     cell.innerText = value;
+    // count values filled & reset wrong values
+    countValuesFilled();
+
+    clearTimeout(timer);
+    timer = setTimeout(sendValues, 3000);
 
     switch (value) {
         case '0':
