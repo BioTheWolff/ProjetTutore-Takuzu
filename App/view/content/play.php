@@ -3,6 +3,7 @@
 <!-- La grille en HTML est générée par le js -->
 <div id="grid"></div>
 <button type="button" id="backward" onclick="backward()">↩️</button>
+<button type="button" id="solve" onclick="solve()">✔️</button>
 <button type="button" id="forward" onclick="forward()">↪️</button>
 
 
