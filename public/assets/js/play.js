@@ -233,6 +233,8 @@ function solve() {
 
 // display the soluce for the current grid
 function displaySoluce(data) {
+    // make it so that no error show up when soluce is displayed
+    clearTimeout(timer);
     console.log("⭐ SOLUTION: " + data);
     let sol = data.split(":")[1];
     let i = 0;
