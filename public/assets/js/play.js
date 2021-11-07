@@ -88,7 +88,7 @@ function changeValue(cell) {
         case "1":
             cell.classList.replace("one", "empty")
             cell.innerText = "";
-            made_action(cell.id, "1", "_");
+            made_action(cell.id, "1", "");
             break;
 
         default:
@@ -167,6 +167,12 @@ function backward() {
 
     set_value_for_cell(change[0], change[1]);
 
+    // count values filled & reset wrong values
+    countValuesFilled();
+
+    clearTimeout(timer);
+    timer = setTimeout(sendValues, 3000);
+
     refresh_buttons();
 }
 
@@ -181,6 +187,12 @@ function forward() {
     set_value_for_cell(change[0], change[2]);
     history_pointer++;
 
+    // count values filled & reset wrong values
+    countValuesFilled();
+
+    clearTimeout(timer);
+    timer = setTimeout(sendValues, 3000);
+
     refresh_buttons();
 }
 
@@ -192,11 +204,6 @@ function refresh_buttons() {
 function set_value_for_cell(cell_id, value) {
     let cell = document.getElementById(cell_id)
     cell.innerText = value;
-    // count values filled & reset wrong values
-    countValuesFilled();
-
-    clearTimeout(timer);
-    timer = setTimeout(sendValues, 3000);
 
     switch (value) {
         case '0':
@@ -213,6 +220,11 @@ function set_value_for_cell(cell_id, value) {
             cell.classList.remove("one", "zero")
             cell.classList.add("empty")
     }
+}
+
+// display the soluce for the current grid
+function solve() {
+
 }
 
 // general values bound to be changed
