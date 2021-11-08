@@ -126,17 +126,6 @@ body {font-family: Arial, Helvetica, sans-serif;}
     color: white;
 }
 
-.sonButt{
-    background: transparent;
-    border: transparent;
-}
-
-#sonImage, #musicImage{
-    height: 50px;
-    width: 50px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
 
 /*---ANIMATION---*/
 /* Ouvrir la popup */
