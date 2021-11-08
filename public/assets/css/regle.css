@@ -1,0 +1,28 @@
+#ButduJeu {
+    display: flex;
+    margin-left: 5%;
+}
+
+.sous-session {
+    margin-right: 1%;
+    font-weight: bold;
+}
+
+#container > h1 {
+    margin-top: 2%;
+    text-align: center;
+}
+
+#container {
+    margin: 0 20%;
+}
+
+#regles {
+    margin-top: 2%;
+    margin-left: 5%;
+}
+
+.text {
+    margin-top: auto;
+    margin-bottom: auto;
+}

@@ -1,0 +1,39 @@
+.contact {
+    display: flex;
+}
+
+.information {
+    display: flex;
+}
+
+#infos {
+    margin-right: 5%;
+}
+
+h2 {
+  text-align: center;
+}
+
+.icon {
+    border: 2px solid #000000;
+    border-radius: 50px;
+    padding: 2px;
+}
+
+.information > p {
+    margin-left: 10px;
+}
+
+#container {
+    display: block;
+    margin: 3% auto;
+    width: 55%;
+}
+#second {
+    margin-top: 1%;
+}
+
+iframe {
+    margin-top: 1%;
+    border: 2px solid #000000 !important;
+}
