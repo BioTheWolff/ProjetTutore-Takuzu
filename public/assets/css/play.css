@@ -53,3 +53,55 @@
     animation: morph 1s infinite;
 }
 
+#actions{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+#actionPartie{
+    margin: 2%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#container{
+    margin-top: 5%;
+    margin-left: 7%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 5px;
+    text-align: center;
+}
+
+.buttonsLangues{
+    background: transparent;
+    border: transparent;
+}
+.buttonsLangues img{
+    height: 30px;
+    width: 30px;
+    padding: 0;
+}
+
+#regles, #actions{
+    background: rgba(82, 244, 250, 0.3);
+    border-radius: 5%;
+    margin: 2%;
+}
+
+#changerLangue{
+    transform: translateY(50%);
+    text-align: right;
+    padding-top: 1%;
+    padding-right: 1%;
+}
+
+#regles h2{
+    transform: translateY(-100%);
+}
+#reglesEcrites{
+    transform: translateY(-50%);
+}

@@ -1,12 +1,10 @@
 // Résupère dans la variable son, l'élément dont l'id est "son"
 var sonButton = document.getElementById("sonButton");
-
 // créer un nouveau booleen
 var sonBool = Boolean(sonButton);
 
 // Résupère dans la variable son, l'élément dont l'id est "son"
 var musicButton = document.getElementById("musicButton");
-
 // créer un nouveau booleen
 var musicBool = Boolean(musicButton);
 
