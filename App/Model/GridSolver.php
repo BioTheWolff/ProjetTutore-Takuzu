@@ -27,11 +27,11 @@ class GridSolver
      * @param array $grid the grid to solve
      * @return array the solved grid
      */
-    public static function solveGrid(array $grid): string
+    public static function solveGrid(array $grid): array
     {
         $ins = new GridSolver($grid);
         $ins->solve();
-        return Adapter::grid_to_message($ins->grid);
+        return $ins->grid;
     }
 
 

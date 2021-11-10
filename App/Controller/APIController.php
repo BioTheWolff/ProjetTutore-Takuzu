@@ -83,7 +83,7 @@ class APIController
             http_response_code(400);
             echo "NOK";
         }
-        else echo(GridSolver::solveGrid(Adapter::message_to_grid($_GET['message'])));
+        else echo(Adapter::grid_to_message(GridSolver::solveGrid(Adapter::message_to_grid($_GET['message']))));
     }
 
 }
