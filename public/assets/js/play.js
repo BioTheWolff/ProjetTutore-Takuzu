@@ -19,6 +19,7 @@ function getSize() {
 function downloadAndParseGrid() {
     fetch("?action=api-generate&size=" + getSize())
         .then(response => response.text())
+        .then(data => initialGrid = data)
         .then(data => setupGrid(data.split(":")[0], data.split(":")[1]))
         .catch((error) => alert("Impossible de charger la grille: " + error))
 }
@@ -225,7 +226,7 @@ function set_value_for_cell(cell_id, value) {
 
 // get the soluce from the php api
 function solve() {
-    fetch("?action=api-solve&message=" + getValues())
+    fetch("?action=api-solve&message=" + initialGrid)
         .then(response => response.text())
         .then(data => displaySoluce(data))
         .catch((error) => alert("Impossible de charger la solution : " + error))
@@ -255,6 +256,7 @@ function displaySoluce(data) {
 let cells = document.getElementsByClassName("cell");
 let size = getSize();
 let valuesFilled = 0;
+let initialGrid = "";
 
 // timer for sending grids to api
 let timer = setTimeout(sendValues, 3000);
