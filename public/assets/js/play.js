@@ -1,16 +1,21 @@
+// General elements of the document
 const grid = document.getElementById("grid");
+const backwardBtn = document.getElementById("backward");
+const forwardBtn = document.getElementById("forward");
+const soluceBtn = document.getElementById("soluce");
 
+// return grid size from url
 function getSize() {
     let url = window.location.href;
-    let pattern = /((?<=size=)[0-9]+)/g;
-    let res = url.match(pattern);
+    let res = url.match(/((?<=size=)[0-9]+)/g);
     if (res.toString() === "") {
-        return 8; // valeur par défaut
+        return 8; // taille par défaut
     } else {
         return parseInt(res.toString());
     }
 }
 
+// fetch grid from php api
 function downloadAndParseGrid() {
     fetch("?action=api-generate&size=" + getSize())
         .then(response => response.text())
@@ -56,15 +61,21 @@ function generateEmptyGrid(size) {
     }
 }
 
-
-function changeValue(cell) {
+function countValuesFilled() {
     valuesFilled = 0;
     for (let cell of grid.children) {
         cell.classList.remove("wrong");
         if (cell.innerText !== "") valuesFilled++;
     }
+}
+
+function changeValue(cell) {
 
     if (cell.classList.contains("static")) return;
+
+    // count values filled & reset wrong values
+    countValuesFilled();
+
     clearTimeout(timer);
     timer = setTimeout(sendValues, 3000);
 
@@ -72,19 +83,19 @@ function changeValue(cell) {
         case "0":
             cell.classList.replace("zero", "one")
             cell.innerText = "1";
-            cell.style = "background-color:#ff6b6b";
+            made_action(cell.id, "0", "1");
             break;
 
         case "1":
             cell.classList.replace("one", "empty")
             cell.innerText = "";
-            cell.style = "background-color:#ffffff";
+            made_action(cell.id, "1", "");
             break;
 
         default:
             cell.classList.replace("empty", "zero")
             cell.innerText = "0";
-            cell.style = "background-color:#ffe66d";
+            made_action(cell.id, "", "0");
     }
 }
 
@@ -100,6 +111,7 @@ function getValues() {
     return values;
 }
 
+// send values to the php api
 function sendValues() {
     fetch("?action=api-check&message=" + getValues())
         .then(response => response.text())
@@ -118,23 +130,143 @@ function alertWin(data) {
     }
 }
 
+// apply colors to the grid to show errors
 function highlightErrors(errors) {
-    let errsplit = errors.split(":")[1].split(",");
-    if (errsplit[0] === "c") {
-        for (let i = parseInt(errsplit[2]); i < size ** 2; i = i + size) {
+    let errsplit = errors.split(":");
+    if (errsplit[1] === "c") {
+        for (let i = parseInt(errsplit[3]); i < size ** 2; i = i + size) {
             cells.item(i).classList.add("wrong");
         }
     } else {
-        for (let i = errsplit[1] * size; i < errsplit[1] * size + size; i++) {
+        for (let i = errsplit[2] * size; i < errsplit[2] * size + size; i++) {
             cells.item(i).classList.add("wrong");
         }
     }
 }
 
-let valuesFilled = 0;
+function made_action(cell_id, old_value, new_value) {
+    if (!forwardBtn.disabled) {
+        // we are in the past time (not at the last action made)
+        // rewiring the history
+        history = history.slice(0, history_pointer);
+    }
+
+    history.push([cell_id, old_value, new_value]);
+    history_pointer++;
+    refresh_buttons();
+}
+
+// backward in grids history
+function backward() {
+    // cannot read deeper into history
+    if (history_pointer < 0) return;
+
+    // decrease pointer to "go back in time"
+    // then revert old value
+    history_pointer--;
+    let change = history[history_pointer];
+
+    set_value_for_cell(change[0], change[1]);
+
+    // count values filled & reset wrong values
+    countValuesFilled();
+
+    clearTimeout(timer);
+    timer = setTimeout(sendValues, 3000);
+
+    refresh_buttons();
+}
+
+// forward in grids history
+function forward() {
+    // cannot read further into history
+    if (history_pointer > history.length - 1) return;
+
+    // re-apply change then increase pointer
+    // we are working our way back to "present time"
+    let change = history[history_pointer];
+    set_value_for_cell(change[0], change[2]);
+    history_pointer++;
+
+    // count values filled & reset wrong values
+    countValuesFilled();
+
+    clearTimeout(timer);
+    timer = setTimeout(sendValues, 3000);
+
+    refresh_buttons();
+}
+
+function refresh_buttons() {
+    backwardBtn.disabled = history_pointer <= 0;
+    forwardBtn.disabled = history_pointer > history.length - 1;
+}
+
+function set_value_for_cell(cell_id, value) {
+    let cell = document.getElementById(cell_id)
+    cell.innerText = value;
+
+    switch (value) {
+        case '0':
+            cell.classList.remove("one", "empty")
+            cell.classList.add("zero")
+            break;
+
+        case '1':
+            cell.classList.remove("zero", "empty")
+            cell.classList.add("one")
+            break;
+
+        default:
+            cell.classList.remove("one", "zero")
+            cell.classList.add("empty")
+    }
+}
+
+// get the soluce from the php api
+function solve() {
+    fetch("?action=api-solve&message=" + getValues())
+        .then(response => response.text())
+        .then(data => displaySoluce(data))
+        .catch((error) => alert("Impossible de charger la solution : " + error))
+}
+
+// display the soluce for the current grid
+function displaySoluce(data) {
+    // make it so that no error show up when soluce is displayed
+    clearTimeout(timer);
+    console.log("⭐ SOLUTION: " + data);
+    let sol = data.split(":")[1];
+    let i = 0;
+    for (let cell of grid.children) {
+        cell.classList.remove("wrong");
+        cell.classList.add("static");
+        cell.style = "background-color:#f2de02"
+        cell.textContent = sol[i];
+        i++;
+    }
+    // disable all buttons
+    soluceBtn.disabled = true;
+    backwardBtn.disabled = true;
+    forwardBtn.disabled = true;
+}
+
+// general values bound to be changed
 let cells = document.getElementsByClassName("cell");
-let timer = setTimeout(sendValues, 3000);
 let size = getSize();
+let valuesFilled = 0;
+
+// timer for sending grids to api
+let timer = setTimeout(sendValues, 3000);
 clearTimeout(timer);
+
+// grid history
+let history = [];
+let history_pointer = 0;
+
+// buttons disabled by default
+backwardBtn.disabled = true;
+forwardBtn.disabled = true;
+
 downloadAndParseGrid();
 
