@@ -2,6 +2,7 @@
 
 require_once(Path::get_path("l", "Adapter"));
 require_once(Path::get_path("m", "GridVerifier"));
+require_once(Path::get_path("m", "GridSolver"));
 require_once(Path::get_path("l", "Douane"));
 
 
