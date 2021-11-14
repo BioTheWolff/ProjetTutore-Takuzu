@@ -2,6 +2,7 @@
 
 require_once(Path::get_path("l", "Adapter"));
 require_once(Path::get_path("m", "GridVerifier"));
+require_once(Path::get_path("m", "GridSolver"));
 require_once(Path::get_path("l", "Douane"));
 
 
@@ -14,7 +15,7 @@ class APIController
     /**
      * Route permettant de vérifier que la grille est correcte
      *
-     * @see GridVerifier::partial_verify
+     * @see GridVerifier::verify
      */
     public static function check()
     {
@@ -22,7 +23,7 @@ class APIController
             http_response_code(400);
             echo "NOK";
         }
-        else echo(GridVerifier::partial_verify(Adapter::message_to_grid($_GET['message'])));
+        else echo(GridVerifier::verify(GridVerifier::FORMAT_MESSAGE, Adapter::message_to_grid($_GET['message'])));
     }
 
     /**
@@ -83,7 +84,7 @@ class APIController
             http_response_code(400);
             echo "NOK";
         }
-        else echo(GridSolver::solveGrid(Adapter::message_to_grid($_GET['message'])));
+        else echo(Adapter::grid_to_message(GridSolver::solveGrid(Adapter::message_to_grid($_GET['message']))));
     }
 
 }
