@@ -36,11 +36,11 @@
 
     <!-- Option Audio -->
     <div id="actionPartie">
-        <button id="boucle" type="submit" class="buttons">
+        <button id="boucle" type="submit" class="buttons" onclick="window.location.reload()">
             <img id="boucleImage" src="assets/img/boucle.png" alt="relancer la partie du début">
         </button>
         <button id="pause" type="submit" class="buttons">
-            <img id="pauseImage" src="assets/img/pause.png" alt="mettre en pause">
+            <img id="pauseImage" src="assets/img/pause.png" alt="mettre en pause" onclick="pauseGame()">
         </button>
     </div>
 
@@ -62,6 +62,22 @@
             <source  src="assets/music/music.mp3" type="audio/mpeg" volume="50" loop="true" autostart="false">
             Votre navigateur ne supporte pas la balise audio.
         </audio>
+    </div>
+</div>
+
+<!-- POP UP -->
+<div id="myPopupOption" class="popup">
+    <!-- Contenu du POP UP-->
+    <div class="popup-content">
+        <div class="popup-header">
+            <span class="close">&times;</span>
+            <h2>Pause</h2>
+        </div>
+        <div class="popup-body">
+            <button id="home" type="submit" class="buttons" onclick="goHome()">Retourner à la page d'acceuil</button>
+            <button id="boucle2" type="submit" class="buttons" onclick="window.location.reload()">Recommencer la partie</button>
+            <button id="depause" type="submit" class="buttons">Continuer la partie</button>
+        </div>
     </div>
 </div>
 

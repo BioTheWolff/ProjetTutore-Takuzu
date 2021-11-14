@@ -54,3 +54,9 @@ musicButton.onclick = function (){
         }
     }
 }
+
+function goHome(){
+    let index = document.location.href.lastIndexOf('?action');
+    let url = document.location.href.slice(0, index);
+    window.open(url,"_self");
+}
