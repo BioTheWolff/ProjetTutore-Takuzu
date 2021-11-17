@@ -272,3 +272,75 @@ forwardBtn.disabled = true;
 
 downloadAndParseGrid();
 
+
+
+/*TIMER*/
+var heuresLabel = document.getElementById("heures");
+var minutesLabel = document.getElementById("minutes");
+var secondesLabel = document.getElementById("secondes");
+var totalSecondes = 0;
+setInterval(setTime, 1000);
+pause = false;
+
+/*POPUP*/
+var pauseMenuPopup = document.getElementById("myPopupOption");
+var gamePlay = document.getElementById("play");
+
+function pauseGame(){
+    this.pause = true;
+    setTime();
+    pauseMenuPopup.style.display = "block";
+    gamePlay.style.display = "hidden";
+}
+
+function depauseGame(){
+    this.pause = false;
+    setTime();
+    pauseMenuPopup.style.display = "none";
+    gamePlay.style.display = "flex";
+}
+
+function setTime()
+{
+    if (pause === false) { // jeu pas en pause
+        ++totalSecondes;
+    }
+    secondesLabel.innerHTML = pad(totalSecondes%60);
+    minutesLabel.innerHTML = pad(parseInt(totalSecondes/60));
+    heuresLabel.innerHTML = pad(parseInt(totalSecondes/3600));
+}
+
+function pad(val)
+{
+    var valString = val + "";
+    if(valString.length < 2)
+    {
+        return "0" + valString;
+    }
+    else
+    {
+        return valString;
+    }
+}
+
+
+let nameRules = document.getElementById("nameRules");
+let suite = document.getElementById("suite");
+let multiplicite = document.getElementById("multiplicite");
+let pattern = document.getElementById("pattern");
+
+function ukRules(){
+    nameRules.textContent = nameRules.textContent.replace(nameRules.textContent, "📜 Rules");
+
+    suite.textContent = suite.textContent.replace(suite.textContent, "You can't have the same number three times in a row");
+    multiplicite.textContent = multiplicite.textContent.replace(multiplicite.textContent, "You must have the same number of 0's and 1's in a row / column");
+    pattern.textContent = pattern.textContent.replace(pattern.textContent, "You cannot have the same pattern in different rows / columns");
+}
+
+function frRules(){
+    nameRules.textContent = nameRules.textContent.replace(nameRules.textContent, "📜 Règles");
+
+    suite.textContent = suite.textContent.replace(suite.textContent, "Vous ne pouvez pas avoir trois fois le même numéro à la suite");
+    multiplicite.textContent = multiplicite.textContent.replace(multiplicite.textContent, "Vous devez avoir le même nombre de 0 et 1 dans une ligne/colonne");
+    pattern.textContent = pattern.textContent.replace(pattern.textContent, "Vous ne pouvez pas avoir le même motif dans différentes lignes/colonnes");
+}
