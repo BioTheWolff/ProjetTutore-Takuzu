@@ -60,3 +60,19 @@ function goHome(){
     let url = document.location.href.slice(0, index);
     window.open(url,"_self");
 }
+
+function goContact(){
+    let index = document.location.href.lastIndexOf('?action');
+    let url = document.location.href.slice(0, index);
+    url = url + "?action=contact";
+    window.open(url,"_self");
+}
+
+function goRegle(){
+    let index = document.location.href.lastIndexOf('?action');
+    let url = document.location.href.slice(0, index);
+    url = url + "?action=regle";
+    window.open(url,"_self");
+}
+
+
