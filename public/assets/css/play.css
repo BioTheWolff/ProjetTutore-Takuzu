@@ -53,12 +53,6 @@
     animation: morph 1s infinite;
 }
 
-#actions{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-}
 #actionPartie{
     margin: 2%;
     display: flex;
@@ -66,13 +60,19 @@
     flex-direction: column;
 }
 
-#container{
+#play{
     margin-top: 5%;
     margin-left: 7%;
     display: flex;
     align-items: center;
     flex-direction: row;
     padding: 5px;
+    text-align: center;
+}
+
+#container{
+    display: flex;
+    flex-direction: column;
     text-align: center;
 }
 
@@ -90,18 +90,22 @@
     background: rgba(82, 244, 250, 0.3);
     border-radius: 5%;
     margin: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 #changerLangue{
-    transform: translateY(50%);
-    text-align: right;
-    padding-top: 1%;
-    padding-right: 1%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
 }
 
-#regles h2{
-    transform: translateY(-100%);
+#regles{
+    width: 30%;
 }
-#reglesEcrites{
-    transform: translateY(-50%);
+
+#actions{
+    width: 20%;
 }
