@@ -80,25 +80,25 @@ class GridSolverTest extends TestCase
     public function testSolveGrid()
     {
         $fullExpected = [
-            [  0,   0,   1,   1,   0,   0,   1,   1],
-            [  1,   0,   0,   1,   1,   0,   0,   1],
-            [  0,   1,   1,   0,   0,   1,   1,   0],
-            [  1,   0,   1,   0,   1,   1,   0,   0],
             [  0,   1,   0,   1,   1,   0,   0,   1],
-            [  1,   0,   1,   0,   0,   1,   1,   0],
-            [  1,   1,   0,   0,   1,   0,   0,   1],
-            [  0,   1,   0,   1,   0,   1,   1,   0]
+            [  0,   1,   0,   1,   0,   1,   1,   0],
+            [  1,   0,   1,   0,   0,   1,   0,   1],
+            [  0,   1,   1,   0,   1,   0,   0,   1],
+            [  1,   0,   0,   1,   0,   1,   1,   0],
+            [  0,   1,   0,   0,   1,   0,   1,   1],
+            [  1,   0,   1,   1,   0,   1,   0,   0],
+            [  1,   0,   1,   0,   1,   0,   1,   0]
         ];
 
         $fullGrid = [
-            [self::G, self::G, self::G, self::G, self::G, self::G, self::G, self::G],
-            [  1, self::G, self::G, self::G, self::G, self::G, self::G, self::G],
-            [self::G, self::G, self::G,   0, self::G,   1, self::G, self::G],
-            [self::G, self::G, self::G,   0, self::G, self::G,   0,   0],
-            [self::G, self::G, self::G, self::G, self::G, self::G,   0, self::G],
-            [  1, self::G, self::G, self::G, self::G, self::G, self::G, self::G],
-            [  1,   1, self::G, self::G, self::G, self::G, self::G, self::G],
-            [self::G, self::G,   0, self::G, self::G, self::G, self::G, self::G]
+            [self::G, self::G, self::G, self::G, self::G,       0, self::G, self::G],
+            [      0, self::G, self::G, self::G, self::G, self::G, self::G,       0],
+            [self::G, self::G,       1, self::G, self::G, self::G, self::G, self::G],
+            [self::G, self::G, self::G, self::G, self::G,       0, self::G, self::G],
+            [self::G,       0,       0, self::G, self::G, self::G, self::G,       0],
+            [self::G, self::G, self::G,       0, self::G, self::G, self::G, self::G],
+            [self::G,       0, self::G, self::G, self::G, self::G,       0,       0],
+            [self::G,       0, self::G,       0, self::G,       0, self::G,       0]
         ];
 
         $actual = GridSolver::solveGrid($fullGrid);
@@ -110,6 +110,6 @@ class GridSolverTest extends TestCase
             self::fail("Grid was not full");
         }
 
-        //self::assertEquals($fullExpected, $actual);
+        self::assertEquals($fullExpected, $actual);
     }
 }
