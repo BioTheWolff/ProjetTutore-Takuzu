@@ -75,4 +75,26 @@ function goRegle(){
     window.open(url,"_self");
 }
 
+function checkSound()
+{
+    // vérifie si le son est activé, si oui on lance le son stocké
+    if (sonBool){
+        audio.currentTime = 0;
+        audio.play();
+    }
+}
+
+function showPopup(popup)
+{
+    popupContainer.classList.add("shown");
+    popup.classList.add("shown");
+    checkSound();
+}
+
+function hidePopup(popup)
+{
+    popupContainer.classList.remove("shown");
+    popup.classList.remove("shown");
+    checkSound();
+}
 

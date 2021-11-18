@@ -1,16 +1,30 @@
 html, body {
-    background: #e0c994;
+    background: rgb(29,201,89);
+    background: linear-gradient(330deg, rgba(29,201,89,1) 26%, rgba(13,64,189,1) 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
 .navbar-menu {
     display: flex;
     justify-content: center;
-
 }
 
 .navbar {
     width: 100%;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    padding: 5px 0;
 }
 
 .pages {
@@ -30,8 +44,6 @@ html, body {
 }
 
 .footer {
-    position: absolute;
-    bottom: 0px;
     width: 95%;
     text-align: center;
     border: 2px solid #968663;
@@ -47,6 +59,7 @@ html, body {
     background: transparent;
     border: transparent;
 }
+
 button img{
     height: 50px;
     width: 50px;
@@ -56,13 +69,21 @@ button img{
 
 
 /*PopUp*/
-.popup {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    left: 0;
+#popup-container {
+    display: none;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    position: absolute;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.popup {
+    margin: auto;
+    display: none; /* Hidden by default */
     overflow: auto; /* Enable scroll if needed */
     -webkit-animation-name: fadeIn; /* Fade in the background */
     -webkit-animation-duration: 0.4s;
@@ -72,14 +93,17 @@ button img{
 
 /* Modal Content */
 .popup-content {
-    position: fixed;
-    bottom: 0;
+    height: min-content;
+    min-width: 25vw;
     background-color: #fefefe;
-    width: 100%;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.4s;
     animation-name: slideIn;
     animation-duration: 0.4s
+}
+
+#popup-container.shown, .popup.shown {
+    display: flex;
 }
 
 /* The Close Button */
