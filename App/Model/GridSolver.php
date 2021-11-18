@@ -104,7 +104,15 @@ class GridSolver
                         if ($this->get($d, $i, $j) != $this->gap) continue;
 
                         // try to solve using the multiplicity constraint
-                        if (($v = $this->check_mult($d, $i, $j)) !== null) $this->fill($d, $i, $j, 1-$v);
+                        if (($v = $this->check_mult($d, $i, $j)) !== null)
+                        {
+                            // prevent from inserting if we cannot insert
+                            if (!$this->verify_with_values($d, $i, [$j => 1-$v])) {
+                                $this->revert_hypothesis_and_apply_opposite();
+                                continue;
+                            }
+                            $this->fill($d, $i, $j, 1-$v);
+                        }
 
                     }
 
