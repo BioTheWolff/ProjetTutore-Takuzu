@@ -61,7 +61,6 @@ class GridVerifier
         $mult = -1;
         $c_one = 0;
         $seen = -1;
-        $is_full = true;
 
         foreach (['l', 'c'] as $d)
         {
@@ -70,6 +69,7 @@ class GridVerifier
             for ($i = 0; $i < count($grid); $i++)
             {
                 $line = [];
+                $is_full = true;
 
                 for ($j = 0; $j < count($grid[0]); $j++)
                 {
