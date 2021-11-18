@@ -264,8 +264,8 @@ class GridSolver
 
     private function verify_with_values(string $direction, int $i, array $candidates): bool
     {
-        return GridVerifier::CODE_NOERR == GridVerifier::verify(
-                GridVerifier::FORMAT_CODE,
+        return GridVerifier::verify(
+                GridVerifier::FORMAT_CHECK_NOERR,
                 $this->grid,
                 Adapter::insertions_solver_to_verifier($direction, $i, $candidates)
             );
