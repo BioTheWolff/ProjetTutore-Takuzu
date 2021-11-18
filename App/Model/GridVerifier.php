@@ -8,10 +8,11 @@
 class GridVerifier
 {
 
-    const FORMAT_CODE = 100;
-    const FORMAT_ARRAY = 200;
-    const FORMAT_MESSAGE = 300;
-    const FORMAT_CHECK_NOERR = 400;
+    const FORMAT_CODE = 0b1;
+    const FORMAT_ARRAY = 0b10;
+    const FORMAT_MESSAGE = 0b100;
+    const FORMAT_CHECK_NOERR = 0b1000;
+    const FORMAT_ENSURE_FULL = 0b100000;
 
     const CODE_NOERR = 0;
     const CODE_MULT = 1;
@@ -26,19 +27,25 @@ class GridVerifier
     public static function verify(int $format, array $grid, array $insertions = null)
     {
         $res = self::partial_verify($grid, $insertions);
-        switch ($format)
+
+        $ensure_full = $format & self::FORMAT_ENSURE_FULL;
+        $return_format = $format & 0b1111;
+
+        if ($ensure_full && !$res[0]) throw new RuntimeException("Grid is not full");
+
+        switch ($return_format)
         {
             case self::FORMAT_CODE:
-                return $res[0];
+                return $res[1];
 
             case self::FORMAT_ARRAY:
                 return $res;
 
             case self::FORMAT_MESSAGE:
-                return self::format_message($res);
+                return self::format_message(array_slice($res, 1, null));
 
             case self::FORMAT_CHECK_NOERR:
-                return self::CODE_NOERR == $res[0];
+                return self::CODE_NOERR == $res[1];
 
             default:
                 throw new RuntimeException("Unrecognised verifier format.");
@@ -61,6 +68,7 @@ class GridVerifier
         $mult = -1;
         $c_one = 0;
         $seen = -1;
+        $grid_is_full = true;
 
         foreach (['l', 'c'] as $d)
         {
@@ -79,7 +87,10 @@ class GridVerifier
                     );
                     $line[] = $n;
 
-                    if ($n == Adapter::GAP_PHP) $is_full = false;
+                    if ($n == Adapter::GAP_PHP) {
+                        $grid_is_full = false;
+                        $is_full = false;
+                    }
 
                     // test multiplicité
                     if ($j == 0)
@@ -97,7 +108,7 @@ class GridVerifier
 
                     // erreur multiplicité
                     if ($seen != Adapter::GAP_PHP && $mult >= 3)
-                        return [self::CODE_MULT, $d, $i, $j];
+                        return [$grid_is_full, self::CODE_MULT, $d, $i, $j];
 
                     // règle d'apparence
                     if ($n == 1) $c_one++;
@@ -106,16 +117,16 @@ class GridVerifier
                 if (!$is_full) continue;
 
                 // erreur égalité d'apparence
-                if ($c_one != count($grid)/2) return [self::CODE_STABILITY, $d, $i, $c_one];
+                if ($c_one != count($grid)/2) return [$grid_is_full, self::CODE_STABILITY, $d, $i, $c_one];
 
                 // erreur motif
                 $line = implode("", $line);
-                if (in_array($line, $shape_array)) return [self::CODE_SHAPE, $d, $i];
+                if (in_array($line, $shape_array)) return [$grid_is_full, self::CODE_SHAPE, $d, $i];
                 else $shape_array[] = $line;
             }
         }
 
-        return [self::CODE_NOERR];
+        return [$grid_is_full, self::CODE_NOERR];
     }
 
     private static function format_message(array $result): string
