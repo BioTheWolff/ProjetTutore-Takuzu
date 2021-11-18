@@ -1,8 +1,5 @@
 /* PAGE D'ACCUEIL*/
 #page_accueil{
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
     display: flex;
     align-items: center;
 }
@@ -15,15 +12,20 @@
     text-shadow: 2px 2px 4px rosybrown;
     color: #ededed;
 }
+
 .accueil_logo img {
     border-radius: 10px 100px / 120px;
     width: 300px;
     height: 200px;
 }
 
-.container {
-    width: 80%;
-    margin: 0 auto;
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons-container > .outline {
+    margin: 5px;
 }
 
 button {
@@ -60,8 +62,3 @@ button {
 .outline:active {
     border-radius: 22px;
 }
-
-
-
-/* POP UP*/
-body {font-family: Arial, Helvetica, sans-serif;}

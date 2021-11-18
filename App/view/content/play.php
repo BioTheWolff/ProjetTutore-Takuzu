@@ -41,7 +41,7 @@
             <button id="boucle" type="button" class="buttons" onclick="window.location.reload()">
                 <img id="boucleImage" src="assets/img/boucle.png" alt="relancer la partie du début">
             </button>
-            <button id="pause" type="button" class="buttons" onclick="pauseGame()">
+            <button id="pause" type="button" class="buttons">
                 <img id="pauseImage" src="assets/img/pause.png" alt="mettre en pause">
             </button>
         </div>
@@ -67,23 +67,25 @@
         </div>
     </div>
 
-    <!-- POP UP PAUSE MENU -->
-    <div id="myPopupOption" class="popup">
-        <!-- Contenu du POP UP-->
-        <div class="popup-content">
-            <div class="popup-header">
-                <h2>Pause</h2>
-            </div>
-            <div class="popup-body">
-                <button id="home" type="button" class="buttons" onclick="goHome()">
-                    <img id="homeImage" src="assets/img/home.png" alt="Revenir à la page d'acceuil">
-                </button>
-                <button id="boucle2" type="button" class="buttons" onclick="window.location.reload()">
-                    <img id="boucleImage" src="assets/img/boucle.png" alt="recommencer la partie du début">
-                </button>
-                <button id="depause" type="button" class="buttons" onclick="depauseGame()">
-                    <img id="depauseImage" src="assets/img/play.png" alt="continuer la partie">
-                </button>
+    <div id="popup-container">
+        <!-- POP UP PAUSE MENU -->
+        <div id="myPopupOption" class="popup">
+            <!-- Contenu du POP UP-->
+            <div class="popup-content">
+                <div class="popup-header">
+                    <h2>Pause</h2>
+                </div>
+                <div class="popup-body">
+                    <button id="home" type="button" class="buttons" onclick="goHome()">
+                        <img id="homeImage" src="assets/img/home.png" alt="Revenir à la page d'acceuil">
+                    </button>
+                    <button id="boucle2" type="button" class="buttons" onclick="window.location.reload()">
+                        <img id="boucleImage" src="assets/img/boucle.png" alt="recommencer la partie du début">
+                    </button>
+                    <button id="depause" type="button" class="buttons">
+                        <img id="depauseImage" src="assets/img/play.png" alt="continuer la partie">
+                    </button>
+                </div>
             </div>
         </div>
     </div>

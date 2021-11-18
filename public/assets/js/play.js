@@ -3,6 +3,7 @@ const grid = document.getElementById("grid");
 const backwardBtn = document.getElementById("backward");
 const forwardBtn = document.getElementById("forward");
 const soluceBtn = document.getElementById("soluce");
+var pauseBtn = document.getElementById("pause");
 
 // return grid size from url
 function getSize() {
@@ -224,6 +225,8 @@ function set_value_for_cell(cell_id, value) {
     }
 }
 
+let pause = false;
+
 // get the soluce from the php api
 function solve() {
     fetch("?action=api-solve&message=" + initialGrid)
@@ -250,6 +253,11 @@ function displaySoluce(data) {
     soluceBtn.disabled = true;
     backwardBtn.disabled = true;
     forwardBtn.disabled = true;
+    pauseBtn.disabled = true;
+
+
+    pause = true;
+    setTime();
 }
 
 // general values bound to be changed
@@ -280,25 +288,17 @@ var minutesLabel = document.getElementById("minutes");
 var secondesLabel = document.getElementById("secondes");
 var totalSecondes = 0;
 setInterval(setTime, 1000);
-pause = false;
 
 /*POPUP*/
+let popupContainer = document.getElementById("popup-container");
 var pauseMenuPopup = document.getElementById("myPopupOption");
-var gamePlay = document.getElementById("play");
+var depause = document.getElementById("depause");
 
-function pauseGame(){
-    this.pause = true;
-    setTime();
-    pauseMenuPopup.style.display = "block";
-    gamePlay.style.display = "hidden";
-}
 
-function depauseGame(){
-    this.pause = false;
-    setTime();
-    pauseMenuPopup.style.display = "none";
-    gamePlay.style.display = "flex";
-}
+pauseBtn.onclick = () => {showPopup(pauseMenuPopup); pause = true; setTime();}
+depause.onclick = () => {hidePopup(pauseMenuPopup); pause = false; setTime();}
+
+
 
 function setTime()
 {
