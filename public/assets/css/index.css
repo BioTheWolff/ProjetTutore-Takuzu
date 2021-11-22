@@ -8,6 +8,11 @@
     text-align: center;
 }
 
+#yuzu{
+    display: none;
+}
+
+
 .accueil_logo h2 {
     text-shadow: 2px 2px 4px rosybrown;
     color: #ededed;
