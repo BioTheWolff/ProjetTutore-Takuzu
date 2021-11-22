@@ -61,21 +61,15 @@
 }
 
 #play{
-    margin-top: 5%;
-    margin-left: 7%;
     display: flex;
     align-items: center;
-    flex-direction: row;
-    padding: 5px;
-    text-align: center;
 }
 
 #container{
     display: flex;
     flex-direction: column;
-    text-align: center;
+    align-items: center;
 }
-
 .buttonsLangues{
     background: transparent;
     border: transparent;
@@ -93,7 +87,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    width: 30%;
 }
 
 #changerLangue{
@@ -102,10 +96,21 @@
     align-content: center;
 }
 
-#regles{
-    width: 30%;
+#reglesEcrites{
+    text-align: left;
 }
 
 #actions{
-    width: 20%;
+    text-align: center;
+}
+
+#timerDiv{
+    background: rgba(82, 244, 250, 0.3);
+    border-radius: 5%;
+    text-align: center;
+    padding: 10px;
+}
+
+#timerDiv > h2{
+    max-height: 5vh;
 }
