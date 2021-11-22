@@ -1,7 +1,7 @@
 <nav>
     <div class="navbar">
         <ul class="navbar-menu">
-            <button class="pages" onclick="goHome()">Accueil</button>
+            <img id="yuzu" src="assets/img/Yuzu2.png" alt="logo" onclick="goHome()">
             <button class="pages" onclick="goRegle()">Règles</button>
             <button class="pages" onclick="goContact()">Contact</button>
         </ul>

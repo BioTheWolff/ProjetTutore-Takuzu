@@ -20,6 +20,27 @@ body {
 .navbar-menu {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+
+
+#yuzu {
+    width: 10%;
+    height: 10%;
+}
+
+.navbar-menu > .pages{
+    flex-direction: row;
+    width: 10%;
+    height: 10%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 2px solid #968663;
+    padding-right: 1%;
+    border-radius: 5px;
+    box-shadow: 0 0 0.5em #b39d78;
+    background-color: transparent;
 }
 
 .navbar {
@@ -27,17 +48,6 @@ body {
     padding: 5px 0;
 }
 
-.pages {
-    flex-direction: row;
-    width: 20%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border: 2px solid #968663;
-    margin-right: 1%;
-    border-radius: 5px;
-    box-shadow: 0 0 0.5em #b39d78;
-    background-color: transparent;
-}
 
 .pages:hover {
     border-color: #5ba0e5;
