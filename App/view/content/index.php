@@ -1,6 +1,6 @@
 <div id="page_accueil">
     <div class="accueil_logo">
-        <img src="assets/img/Yuzu2.png">
+        <img src="assets/img/Yuzu.png">
     </div>
     <div class="accueil_section">
         <div class="buttons-container">
