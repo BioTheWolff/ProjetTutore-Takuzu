@@ -1,7 +1,5 @@
 <?php
 
-require_once(Path::get_path("m", ["verifier", "VerifierAdapter"]));
-require_once(Path::get_path("m", "GridSolver"));
 require_once(Path::get_path("m", ['messages', 'MessageAdapter']));
 require_once(Path::get_path("l", "Douane"));
 
