@@ -6,7 +6,13 @@ class Path
     private const PROJECT_ROOT = __DIR__ . "/../../";
     private const APP_ROOT = __DIR__ . "/../";
 
-    public static function get_path(string $type, string $name): string
+    private static function array_to_string($name): string
+    {
+        if (gettype($name) == 'string') return $name;
+        else return implode("/", $name);
+    }
+
+    public static function get_path(string $type, $name): string
     {
         $dir = null;
         switch ($type)
@@ -31,6 +37,7 @@ class Path
                 throw new RuntimeException("Wrong type ($type) provided.");
         }
 
+        $name = self::array_to_string($name);
         return self::APP_ROOT . "$dir/$name.php";
     }
 

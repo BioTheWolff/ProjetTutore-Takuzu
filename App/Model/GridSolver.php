@@ -1,6 +1,6 @@
 <?php
 
-require_once 'GridVerifier.php';
+require_once 'verifier/VerifierAdapter.php';
 require_once 'Grid.php';
 
 class GridSolver
@@ -211,7 +211,7 @@ class GridSolver
 
             // if the grid is filled, try running a verification one last time
             // if it fails (surely because of shape), unstack one hypothesis
-            while ($this->filled() && !GridVerifier::verify(GridVerifier::FORMAT_CHECK_NOERR, $this->grid))
+            while ($this->filled() && !VerifierAdapter::is_valid($this->grid))
                 $this->revert_hypothesis_and_apply_opposite();
         }
         // -- END while
@@ -272,11 +272,7 @@ class GridSolver
 
     private function verify_with_values(string $direction, int $i, array $candidates): bool
     {
-        return GridVerifier::verify(
-                GridVerifier::FORMAT_CHECK_NOERR,
-                $this->grid,
-                Adapter::insertions_solver_to_verifier($direction, $i, $candidates)
-            );
+        return VerifierAdapter::is_valid($this->grid, false, $direction, $i, $candidates);
     }
 
     private function filled(): bool

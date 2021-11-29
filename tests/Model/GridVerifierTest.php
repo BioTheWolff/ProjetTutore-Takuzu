@@ -41,26 +41,26 @@ class GridVerifierTest extends TestCase
 
     private static function check(int $code, array $grid): bool
     {
-        return $code == GridVerifier::verify(GridVerifier::FORMAT_CODE, $grid);
+        return $code == IVerifier::code(IVerifier::FORMAT_CODE, $grid);
     }
 
     public function testValid()
     {
-        self::assertTrue(self::check(GridVerifier::CODE_NOERR, $this->valid));
+        self::assertTrue(self::check(IVerifier::CODE_NOERR, $this->valid));
     }
 
     public function testErrorMult()
     {
-        self::assertTrue(self::check(GridVerifier::CODE_MULT, $this->mult));
+        self::assertTrue(self::check(IVerifier::CODE_MULT, $this->mult));
     }
 
     public function testErrorEquality()
     {
-        self::assertTrue(self::check(GridVerifier::CODE_STABILITY, $this->equality));
+        self::assertTrue(self::check(IVerifier::CODE_STABILITY, $this->equality));
     }
 
     public function testErrorShape()
     {
-        self::assertTrue(self::check(GridVerifier::CODE_SHAPE, $this->shape));
+        self::assertTrue(self::check(IVerifier::CODE_SHAPE, $this->shape));
     }
 }
