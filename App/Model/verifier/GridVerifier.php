@@ -48,7 +48,8 @@ class GridVerifier
                     );
                     $line[] = $n;
 
-                    if ($n == Adapter::GAP_PHP) {
+                    // a gap
+                    if ($n == 5) {
                         $grid_is_full = false;
                         $is_full = false;
                     }
@@ -68,7 +69,7 @@ class GridVerifier
                     }
 
                     // erreur multiplicité
-                    if ($seen != Adapter::GAP_PHP && $mult >= 3)
+                    if ($seen != 5 && $mult >= 3)
                         return [$grid_is_full, IVerifier::CODE_MULT, $d, $i, $j];
 
                     // règle d'apparence

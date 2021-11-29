@@ -49,7 +49,7 @@ class GridSolver
     {
         $this->grid = $grid;
         $this->backtrace = [];
-        $this->gap = Adapter::GAP_PHP;
+        $this->gap = 5;
 
         $this->gaps_table = [
             'lines' => [],

@@ -1,22 +1,22 @@
 <?php
 
+require_once 'IMessages.php';
 
-/**
- * Classe de traduction entre les messages JS et les grilles PHP.
- *
- * Format du message: `taille:contenu`
- * Exemple: `4:1010010111000011`
- *
- * Format de la grille: matrice d'entiers dont le trou est une constante définie dans la classe
- *
- * @see Adapter::GAP_PHP la constante de 'trou' en interne
- * @see Adapter::GAP_JS la constante de 'trou' dans les messages échangés
- */
-class Adapter
+require_once Path::get_path("m", ["verifier", "VerifierAdapter"]);
+require_once Path::get_path("m", "GridSolver");
+
+class MessageAdapter implements IMessages
 {
 
-    const GAP_JS = '_';
-    const GAP_PHP = 5;
+    static function verify(string $message): string
+    {
+        return VerifierAdapter::get_message(self::message_to_grid($message));
+    }
+
+    static function solve(string $message): string
+    {
+        return self::grid_to_message(GridSolver::solveGrid(self::message_to_grid($message)));
+    }
 
     /**
      * Transforme la grille interne en message prêt à être envoyé
@@ -48,7 +48,7 @@ class Adapter
      * @param string $message le message reçu
      * @return array la grille
      */
-    public static function message_to_grid(string $message): array
+    private static function message_to_grid(string $message): array
     {
         [$size, $chars] = explode(":", $message);
         $size = (int)$size;
@@ -75,5 +75,4 @@ class Adapter
 
         return $grid;
     }
-
 }
