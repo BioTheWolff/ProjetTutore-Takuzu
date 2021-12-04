@@ -104,7 +104,7 @@ class GridSolverTest extends TestCase
         $actual = GridSolver::solveGrid($fullGrid);
 
         try {
-            self::assertTrue(GridVerifier::verify(GridVerifier::FORMAT_CHECK_NOERR | GridVerifier::FORMAT_ENSURE_FULL, $actual));
+            self::assertTrue(IVerifier::code(IVerifier::FORMAT_CHECK_NOERR | IVerifier::FORMAT_ENSURE_FULL, $actual));
         } catch (RuntimeException $e)
         {
             self::fail("Grid was not full");

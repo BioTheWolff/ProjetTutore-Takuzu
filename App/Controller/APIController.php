@@ -1,8 +1,6 @@
 <?php
 
-require_once(Path::get_path("l", "Adapter"));
-require_once(Path::get_path("m", "GridVerifier"));
-require_once(Path::get_path("m", "GridSolver"));
+require_once(Path::get_path("m", ['messages', 'MessageAdapter']));
 require_once(Path::get_path("l", "Douane"));
 
 
@@ -15,7 +13,7 @@ class APIController
     /**
      * Route permettant de vérifier que la grille est correcte
      *
-     * @see GridVerifier::verify
+     * @see IVerifier::code
      */
     public static function check()
     {
@@ -23,7 +21,7 @@ class APIController
             http_response_code(400);
             echo "NOK";
         }
-        else echo(GridVerifier::verify(GridVerifier::FORMAT_MESSAGE, Adapter::message_to_grid($_GET['message'])));
+        else echo MessageAdapter::verify($_GET['message']);
     }
 
     /**
@@ -35,7 +33,7 @@ class APIController
         // TODO: Prendre en compte la taille de la grille donnée par _$GET['size']
         // TODO: Majorer la taille par 16
 
-        $g = Adapter::GAP_PHP;
+        $g = IMessages::GAP_PHP;
 
         switch ($_GET['size'] ?? '') {
             case '12':
@@ -75,7 +73,7 @@ class APIController
                 ];
         }
 
-        echo(Adapter::grid_to_message($grid));
+        echo MessageAdapter::grid_to_message($grid);
     }
 
     public static function solve()
@@ -84,7 +82,7 @@ class APIController
             http_response_code(400);
             echo "NOK";
         }
-        else echo(Adapter::grid_to_message(GridSolver::solveGrid(Adapter::message_to_grid($_GET['message']))));
+        else echo MessageAdapter::solve($_GET['message']);
     }
 
 }
