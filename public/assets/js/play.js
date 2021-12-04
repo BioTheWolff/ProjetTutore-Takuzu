@@ -245,7 +245,7 @@ function displaySoluce(data) {
     for (let cell of grid.children) {
         cell.classList.remove("wrong");
         cell.classList.add("static");
-        cell.style = "background-color:#f2de02"
+        cell.style = "background-color:#e6ee9c"
         cell.textContent = sol[i];
         i++;
     }

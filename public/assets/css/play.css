@@ -30,11 +30,11 @@
 }
 
 .cell.zero {
-    background-color: #ffe66d;
+    background-color: rgb(206, 147, 216);
 }
 
 .cell.one {
-    background-color: #ff6b6b;
+    background-color: #80cbc4;
 }
 
 .cell.static {
@@ -42,9 +42,9 @@
 }
 
 @keyframes morph {
-    0% { background-color: #FF0000; }
-    50% { background-color: #aa1110; }
-    100% { background-color: #FF0000; }
+    0% { background-color: #ff6666; }
+    50% { background-color: #b64b4b; }
+    100% { background-color: #ff6666; }
 }
 
 .cell.wrong {
@@ -88,6 +88,7 @@
     flex-direction: column;
     align-items: center;
     width: 30%;
+    box-shadow: -3px 10px 30px 0px #1F013D;
 }
 
 #changerLangue{
@@ -108,9 +109,21 @@
     background: rgba(82, 244, 250, 0.3);
     border-radius: 5%;
     text-align: center;
-    padding: 10px;
+    padding: 5px 10px 10px;
+    margin-top: 20px;
+    box-shadow: -3px 10px 30px 0px #1F013D;
 }
 
 #timerDiv > h2{
     max-height: 5vh;
+}
+
+#myPopupOption{
+    min-height: 600px;
+}
+
+.popup-body{
+    height: 25em;
+    line-height: 25em;
+    white-space: nowrap;
 }
