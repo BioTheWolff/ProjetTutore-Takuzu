@@ -17,37 +17,71 @@ body {
     justify-content: center;
 }
 
+/* Menu de navigation*/
+.nav-buttons > .pages {
+    background-color: transparent;
+    width: 20vw;
+    height: 50%;
+    margin-top: auto;
+    border: none;
+}
+
+.pages:hover {
+    background-color: #1976d2;
+    border: 5px double rgba(22,69,148,0.47);
+}
+
 .navbar-menu {
     display: flex;
     justify-content: space-between;
+}
+
+.nav-buttons {
+    display: flex;
 }
 
 #yuzu {
     width: 6vw;
 }
 
-.pages{
-
+.company > h1{
+    font-size: 30px;
+    padding: 5px;
+    margin-left: 1em;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    letter-spacing: 3px;
+    word-spacing: 1px;
+    color: #000000;
+    font-weight: 700;
+    text-decoration: none solid rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: small-caps;
+    text-transform: capitalize;
 }
 
 .navbar {
     width: 100%;
+    background: rgb(0,75,160);
+    background: linear-gradient(180deg, rgba(0,75,160,1) 0%, rgba(25,118,210,1) 35%, rgba(87,145,226,1) 100%);
+    -webkit-box-shadow: 0px 5px 15px 3px #05407D;
+    box-shadow: 0px 5px 15px 3px #05407D;
 }
-
 
 .pages:hover {
     border-color: #5ba0e5;
 }
 
+/*Pied de la page*/
 .footer {
-    width: 95%;
+    width: 100%;
     text-align: center;
-    border: 2px solid #968663;
-    margin-left: 2%;
-    margin-bottom: 1%;
     padding-top: 10px;
     padding-bottom: 10px;
-    box-shadow: 0 0 0.5em #b39d78;
+    background: rgb(0,75,160);
+    background: linear-gradient(0deg, rgba(0,75,160,1) 0%, rgba(25,118,210,1) 35%, rgba(87,145,226,1) 100%);
+    -webkit-box-shadow: 0px 0px 15px 3px #05407D;
+    box-shadow: 0px 0px 15px 3px #05407D;
 }
 
 /*Boutons musique et son*/
