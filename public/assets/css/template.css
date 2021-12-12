@@ -1,43 +1,195 @@
 html, body {
-    background: #e0c994;
+    background: rgb(32,32,32);
+    background: linear-gradient(315deg, rgba(32,32,32,1) 0%, rgba(129,110,203,1) 100%);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
-.navbar-menu {
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#container {
+    flex-grow: 1;
     display: flex;
     justify-content: center;
+}
 
+/* Menu de navigation*/
+.nav-buttons > .pages {
+    background-color: transparent;
+    width: 20vw;
+    height: 50%;
+    margin-top: auto;
+    border: none;
+}
+
+.pages:hover {
+    background-color: #1976d2;
+    border: 5px double rgba(22,69,148,0.47);
+}
+
+.navbar-menu {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-buttons {
+    display: flex;
+}
+
+#yuzu {
+    width: 6vw;
+}
+
+.company > h1{
+    font-size: 30px;
+    padding: 5px;
+    margin-left: 1em;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    letter-spacing: 3px;
+    word-spacing: 1px;
+    color: #000000;
+    font-weight: 700;
+    text-decoration: none solid rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: small-caps;
+    text-transform: capitalize;
 }
 
 .navbar {
     width: 100%;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.pages {
-    flex-direction: row;
-    width: 20%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border: 2px solid #968663;
-    margin-right: 1%;
-    border-radius: 5px;
-    box-shadow: 0 0 0.5em #b39d78;
-    background-color: transparent;
+    background: rgb(0,75,160);
+    background: linear-gradient(180deg, rgba(0,75,160,1) 0%, rgba(25,118,210,1) 35%, rgba(87,145,226,1) 100%);
+    -webkit-box-shadow: 0px 5px 15px 3px #05407D;
+    box-shadow: 0px 5px 15px 3px #05407D;
 }
 
 .pages:hover {
-    border-color: #1172c4;
+    border-color: #5ba0e5;
 }
 
+/*Pied de la page*/
 .footer {
-    position: absolute;
-    bottom: 0px;
-    width: 95%;
+    width: 100%;
     text-align: center;
-    border: 2px solid #968663;
-    margin-left: 2%;
-    margin-bottom: 1%;
     padding-top: 10px;
     padding-bottom: 10px;
-    box-shadow: 0 0 0.5em #b39d78;
+    background: rgb(0,75,160);
+    background: linear-gradient(0deg, rgba(0,75,160,1) 0%, rgba(25,118,210,1) 35%, rgba(87,145,226,1) 100%);
+    -webkit-box-shadow: 0px 0px 15px 3px #05407D;
+    box-shadow: 0px 0px 15px 3px #05407D;
+}
+
+/*Boutons musique et son*/
+.buttons{
+    background: transparent;
+    border: transparent;
+}
+
+button img{
+    height: 50px;
+    width: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+/*PopUp*/
+#popup-container {
+    display: none;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.popup {
+    margin: auto;
+    display: none; /* Hidden by default */
+    overflow: auto; /* Enable scroll if needed */
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s
+}
+
+/* Modal Content */
+.popup-content {
+    height: min-content;
+    min-width: 25vw;
+    background-color: #fefefe;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+    text-align: center;
+}
+
+#popup-container.shown, .popup.shown {
+    display: flex;
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.popup-header {
+    padding: 2px 16px;
+    background-color: #5ba0e5;
+    color: white;
+    font-size: 18px;
+}
+
+.popup-body {
+    padding: 2px 16px;
+    margin-top: 6%;
+    margin-bottom: 6%;
+}
+
+.popup-footer {
+    padding: 2px 16px;
+    background-color: #5ba0e5;
+    color: white;
+}
+
+
+/*---ANIMATION---*/
+/* Ouvrir la popup */
+@-webkit-keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
 }

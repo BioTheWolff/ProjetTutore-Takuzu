@@ -1,8 +1,5 @@
 /* PAGE D'ACCUEIL*/
 #page_accueil{
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
     display: flex;
     align-items: center;
 }
@@ -11,19 +8,28 @@
     text-align: center;
 }
 
+#yuzu{
+    display: none;
+}
+
+
 .accueil_logo h2 {
     text-shadow: 2px 2px 4px rosybrown;
     color: #ededed;
 }
-.accueil_logo img {
-    border-radius: 10px 100px / 120px;
-    width: 300px;
-    height: 200px;
+
+.accueil_logo > img {
+    width: 15vw;
+    height: 15vw;
 }
 
-.container {
-    width: 80%;
-    margin: 0 auto;
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons-container > .outline {
+    margin: 5px;
 }
 
 button {
@@ -34,9 +40,9 @@ button {
 .outline {
     position: relative;
     background: transparent;
-    color: #1172c4;
+    color: #5ba0e5;
     font-size: 14px;
-    border-color: #1172c4;
+    border-color: #5ba0e5;
     border-style: solid;
     border-width: 2px;
     border-radius: 22px;
@@ -52,132 +58,11 @@ button {
 
 .outline:hover {
     color: white;
-    background: #1172c4;
+    background: #5ba0e5;
     border-color: white;
     transition: all 0.2s linear;
 }
 
 .outline:active {
     border-radius: 22px;
-}
-
-
-
-/* POP UP*/
-body {font-family: Arial, Helvetica, sans-serif;}
-
-/* The Modal (background) */
-.popup {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    -webkit-animation-name: fadeIn; /* Fade in the background */
-    -webkit-animation-duration: 0.4s;
-    animation-name: fadeIn;
-    animation-duration: 0.4s
-}
-
-/* Modal Content */
-.popup-content {
-    position: fixed;
-    bottom: 0;
-    background-color: #fefefe;
-    width: 100%;
-    -webkit-animation-name: slideIn;
-    -webkit-animation-duration: 0.4s;
-    animation-name: slideIn;
-    animation-duration: 0.4s
-}
-
-/* The Close Button */
-.close {
-    color: white;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.popup-header {
-    padding: 2px 16px;
-    background-color: #1172c4;
-    color: white;
-}
-
-.popup-body {
-    padding: 2px 16px;
-    margin-top: 6%;
-    margin-bottom: 6%;
-}
-
-.popup-footer {
-    padding: 2px 16px;
-    background-color: #1172c4;
-    color: white;
-}
-
-.sonButt{
-    background: transparent;
-    border: transparent;
-}
-
-#sonImage, #musicImage{
-    height: 50px;
-    width: 50px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-/*---ANIMATION---*/
-/* Ouvrir la popup */
-@-webkit-keyframes slideIn {
-    from {bottom: -300px; opacity: 0}
-    to {bottom: 0; opacity: 1}
-}
-
-@keyframes slideIn {
-    from {bottom: -300px; opacity: 0}
-    to {bottom: 0; opacity: 1}
-}
-
-@-webkit-keyframes fadeIn {
-    from {opacity: 0}
-    to {opacity: 1}
-}
-
-@keyframes fadeIn {
-    from {opacity: 0}
-    to {opacity: 1}
-}
-
-/*//TODO faire l'annimation de fermeture de popup*/
-/* Ferme la popup */
-@-webkit-keyframes slideOut {
-    from {bottom: 0; opacity: 1}
-    to {bottom: -300px; opacity: 0}
-}
-
-@keyframes slideOut {
-    from {bottom: 0; opacity: 1}
-    to {bottom: -300px; opacity: 0}
-}
-
-@-webkit-keyframes fadeOut {
-    from {opacity: 1}
-    to {opacity: 0}
-}
-
-@keyframes fadeOut {
-    from {opacity: 1}
-    to {opacity: 0}
 }

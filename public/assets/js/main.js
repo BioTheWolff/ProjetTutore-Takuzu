@@ -1,12 +1,10 @@
 // Résupère dans la variable son, l'élément dont l'id est "son"
 var sonButton = document.getElementById("sonButton");
-
 // créer un nouveau booleen
 var sonBool = Boolean(sonButton);
 
 // Résupère dans la variable son, l'élément dont l'id est "son"
 var musicButton = document.getElementById("musicButton");
-
 // créer un nouveau booleen
 var musicBool = Boolean(musicButton);
 
@@ -56,3 +54,47 @@ musicButton.onclick = function (){
         }
     }
 }
+
+function goHome(){
+    let index = document.location.href.lastIndexOf('?action');
+    let url = document.location.href.slice(0, index);
+    window.open(url,"_self");
+}
+
+function goContact(){
+    let index = document.location.href.lastIndexOf('?action');
+    let url = document.location.href.slice(0, index);
+    url = url + "?action=contact";
+    window.open(url,"_self");
+}
+
+function goRegle(){
+    let index = document.location.href.lastIndexOf('?action');
+    let url = document.location.href.slice(0, index);
+    url = url + "?action=regle";
+    window.open(url,"_self");
+}
+
+function checkSound()
+{
+    // vérifie si le son est activé, si oui on lance le son stocké
+    if (sonBool){
+        audio.currentTime = 0;
+        audio.play();
+    }
+}
+
+function showPopup(popup)
+{
+    popupContainer.classList.add("shown");
+    popup.classList.add("shown");
+    checkSound();
+}
+
+function hidePopup(popup)
+{
+    popupContainer.classList.remove("shown");
+    popup.classList.remove("shown");
+    checkSound();
+}
+
