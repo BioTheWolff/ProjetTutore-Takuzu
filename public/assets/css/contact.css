@@ -11,7 +11,7 @@
 }
 
 h2 {
-  text-align: center;
+    text-align: center;
 }
 
 .icon {
@@ -27,8 +27,8 @@ h2 {
 #container {
     display: block;
     margin: 3% auto;
-    width: 55%;
 }
+
 #second {
     margin-top: 1%;
 }
@@ -37,3 +37,4 @@ iframe {
     margin-top: 1%;
     border: 2px solid #000000 !important;
 }
+
