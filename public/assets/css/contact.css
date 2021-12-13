@@ -1,13 +1,10 @@
 .contact {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .information {
     display: flex;
-}
-
-#infos {
-    margin-right: 5%;
 }
 
 h2 {
@@ -18,19 +15,23 @@ h2 {
     border: 2px solid #000000;
     border-radius: 50px;
     padding: 2px;
+    margin: 2px;
 }
 
 .information > p {
     margin-left: 10px;
+    align-self: center;
+}
+
+div.information:nth-child(2) {
+    margin-left: 20px;
 }
 
 #container {
-    display: block;
-    margin: 3% auto;
-}
-
-#second {
-    margin-top: 1%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: min-content;
 }
 
 iframe {
