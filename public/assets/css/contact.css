@@ -1,14 +1,13 @@
 .contact {
     display: flex;
     flex-wrap: wrap;
+    border-left: 8px solid #5ba0e5;
+    background: white;
+    padding: 8px 0px 8px 4px;
 }
 
 .information {
     display: flex;
-}
-
-h2 {
-    text-align: center;
 }
 
 .icon {
@@ -24,7 +23,7 @@ h2 {
 }
 
 div.information:nth-child(2) {
-    margin-left: 20px;
+    margin-left: 12px;
 }
 
 #container {
@@ -32,6 +31,12 @@ div.information:nth-child(2) {
     flex-direction: column;
     margin: auto;
     width: min-content;
+}
+
+#container h2 {
+    color: white;
+    text-shadow: 4px 3px 0px #5ba0e5;
+    text-align: center;
 }
 
 iframe {
