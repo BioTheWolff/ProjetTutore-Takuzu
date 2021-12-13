@@ -1,39 +1,46 @@
 .contact {
     display: flex;
+    flex-wrap: wrap;
+    border-left: 8px solid #5ba0e5;
+    background: white;
+    padding: 8px 0px 8px 4px;
 }
 
 .information {
     display: flex;
 }
 
-#infos {
-    margin-right: 5%;
-}
-
-h2 {
-  text-align: center;
-}
-
 .icon {
     border: 2px solid #000000;
     border-radius: 50px;
     padding: 2px;
+    margin: 2px;
 }
 
 .information > p {
     margin-left: 10px;
+    align-self: center;
+}
+
+div.information:nth-child(2) {
+    margin-left: 12px;
 }
 
 #container {
-    display: block;
-    margin: 3% auto;
-    width: 55%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: min-content;
 }
-#second {
-    margin-top: 1%;
+
+#container h2 {
+    color: white;
+    text-shadow: 4px 3px 0px #5ba0e5;
+    text-align: center;
 }
 
 iframe {
     margin-top: 1%;
     border: 2px solid #000000 !important;
 }
+

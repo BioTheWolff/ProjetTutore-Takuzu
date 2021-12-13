@@ -1,6 +1,6 @@
 <h2>Pour nous contacter, c'est simple !</h2>
 <div class="contact">
-    <div class="information" id="infos">
+    <div class="information">
         <img class="icon" src="assets/img/num_icon.png">
         <p>0766613041</p>
     </div>
@@ -8,8 +8,6 @@
         <img class="icon" src="assets/img/email_icon.png">
         <p>paul.hoareau@etu.umontpellier.fr</p>
     </div>
-</div>
-<div class="contact" id="second">
     <div class="information">
         <img class="icon" src="assets/img/adress_icon.png">
         <p>99, Avenue d’Occitanie, 34296 MONTPELLIER</p>
