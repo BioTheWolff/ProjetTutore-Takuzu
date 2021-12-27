@@ -4,6 +4,7 @@ require_once 'IMessages.php';
 
 require_once Path::get_path("m", ["verifier", "VerifierAdapter"]);
 require_once Path::get_path("m", "GridSolver");
+require_once Path::get_path("m", "GridGenerator");
 
 class MessageAdapter implements IMessages
 {
@@ -16,6 +17,12 @@ class MessageAdapter implements IMessages
     static function solve(string $message): string
     {
         return self::grid_to_message(GridSolver::solveGrid(self::message_to_grid($message)));
+    }
+
+    static function generate(int $size, float $fillPercentage): string
+    {
+        //return GridGenerator::generate($size, $fillPercentage);
+        return self::grid_to_message(GridGenerator::generate($size, $fillPercentage));
     }
 
     /**
@@ -48,7 +55,7 @@ class MessageAdapter implements IMessages
      * @param string $message le message reçu
      * @return array la grille
      */
-    private static function message_to_grid(string $message): array
+    public static function message_to_grid(string $message): array
     {
         [$size, $chars] = explode(":", $message);
         $size = (int)$size;

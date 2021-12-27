@@ -30,50 +30,15 @@ class APIController
      */
     public static function generate()
     {
-        // TODO: Prendre en compte la taille de la grille donnée par _$GET['size']
-        // TODO: Majorer la taille par 16
+        $size = (int)($_GET['size'] ?? 8);
+        if ($size > 16) $size = 16;
+        if ($size < 6) $size = 6;
 
-        $g = IMessages::GAP_PHP;
+        $fp = (float)($_GET['fillPercentage'] ?? 0.25);
+        if ($fp > 0.7) $fp = 0.7;
+        if ($fp < 0.25) $fp = 0.25;
 
-        switch ($_GET['size'] ?? '') {
-            case '12':
-                $grid = [
-                    [$g, 1, $g, $g, $g, $g, 0, $g, $g, $g, $g, $g],
-                    [$g, $g, $g, $g, $g, $g, 0, $g, $g, 0, $g, $g],
-                    [1, $g, $g, $g, $g, 0, $g, $g, $g, 1, $g, 1],
-                    [$g, 0, $g, $g, $g, $g, 1, $g, $g, $g, $g, $g],
-                    [$g, $g, 0, $g, $g, 0, $g, $g, 0, $g, $g, $g],
-                    [$g, $g, $g, 1, $g, $g, $g, 0, $g, 0, $g, $g],
-                    [$g, $g, $g, $g, $g, 0, $g, 0, $g, $g, $g, $g],
-                    [$g, $g, $g, 1, $g, $g, 1, $g, $g, $g, $g, $g],
-                    [$g, 1, $g, 1, $g, $g, $g, $g, $g, 0, $g, $g],
-                    [$g, $g, $g, $g, $g, $g, 0, $g, $g, 0, $g, $g],
-                    [$g, 1, $g, 1, $g, $g, $g, 1, $g, $g, $g, 1],
-                    [$g, $g, 0, $g, 0, $g, $g, $g, 0, 0, $g, $g],
-                ];
-                break;
-            case '4':
-                $grid = [
-                    [$g, 1, $g, $g],
-                    [1, $g, 1, $g],
-                    [1, $g, $g, $g],
-                    [$g, $g, 1, $g],
-                ];
-                break;
-            default:
-                $grid = [
-                    [$g, $g, $g, $g, $g, $g, $g, $g],
-                    [1, $g, $g, $g, $g, $g, $g, $g],
-                    [$g, $g, $g, 0, $g, 1, $g, $g],
-                    [$g, $g, $g, 0, $g, $g, 0, 0],
-                    [$g, $g, $g, $g, $g, $g, 0, $g],
-                    [1, $g, $g, $g, $g, $g, $g, $g],
-                    [1, 1, $g, $g, $g, $g, $g, $g],
-                    [$g, $g, 0, $g, $g, $g, $g, $g]
-                ];
-        }
-
-        echo MessageAdapter::grid_to_message($grid);
+        echo MessageAdapter::generate($size, $fp);
     }
 
     public static function solve()

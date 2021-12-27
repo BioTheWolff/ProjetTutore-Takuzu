@@ -20,8 +20,11 @@ function getSize() {
 function downloadAndParseGrid() {
     fetch("?action=api-generate&size=" + getSize())
         .then(response => response.text())
-        .then(data => initialGrid = data)
-        .then(data => setupGrid(data.split(":")[0], data.split(":")[1]))
+        .then(data => {
+            console.log(data);
+            setupGrid(data.split(":")[0], data.split(":")[1]);
+            initialGrid = data;
+        })
         .catch((error) => alert("Impossible de charger la grille: " + error))
 }
 

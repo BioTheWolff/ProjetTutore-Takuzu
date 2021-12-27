@@ -9,4 +9,6 @@ interface IMessages
 
     static function solve(string $message);
 
+    static function generate(int $size, float $fillPercentage);
+
 }
