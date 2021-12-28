@@ -17,4 +17,6 @@ interface IVerifier
 
     static function is_valid(array $grid, bool $force_full = false, string $direction = null, int $i = null, array $candidates = null);
 
+    static function get_code(array $grid, bool $force_full = false, string $direction = null, int $i = null, array $candidates = null);
+
 }

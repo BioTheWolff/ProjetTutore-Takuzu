@@ -3,13 +3,10 @@
 use PHPUnit\Framework\TestCase;
 
 require_once 'App/Lib/Path.php';
-require_once Path::get_path('l', 'Adapter');
-require_once Path::get_path('m', 'GridVerifier');
+require_once Path::get_path('m', ['verifier', 'VerifierAdapter']);
 
 class GridVerifierTest extends TestCase
 {
-
-    const G = Adapter::GAP_PHP;
 
     private $valid = [
         [1, 0, 1, 0],
@@ -41,7 +38,7 @@ class GridVerifierTest extends TestCase
 
     private static function check(int $code, array $grid): bool
     {
-        return $code == IVerifier::code(IVerifier::FORMAT_CODE, $grid);
+        return $code == VerifierAdapter::get_code($grid);
     }
 
     public function testValid()

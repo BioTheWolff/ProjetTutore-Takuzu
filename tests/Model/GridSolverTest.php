@@ -3,13 +3,14 @@
 use PHPUnit\Framework\TestCase;
 
 require_once 'App/Lib/Path.php';
-require_once Path::get_path('l', 'Adapter');
+require_once Path::get_path('m', ['messages', 'MessageAdapter']);
+require_once Path::get_path('m', ['verifier', 'VerifierAdapter']);
 require_once Path::get_path('m', 'GridSolver');
 
 class GridSolverTest extends TestCase
 {
 
-    const G = Adapter::GAP_PHP;
+    const G = IMessages::GAP_PHP;
 
     private $expected = [
         [1, 0, 1, 0],
@@ -104,7 +105,7 @@ class GridSolverTest extends TestCase
         $actual = GridSolver::solveGrid($fullGrid);
 
         try {
-            self::assertTrue(IVerifier::code(IVerifier::FORMAT_CHECK_NOERR | IVerifier::FORMAT_ENSURE_FULL, $actual));
+            self::assertTrue(VerifierAdapter::is_valid($actual));
         } catch (RuntimeException $e)
         {
             self::fail("Grid was not full");
