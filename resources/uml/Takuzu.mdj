@@ -6621,9 +6621,9 @@
 												"$ref": "AAAAAAF8Il6Ijs7vLRo="
 											},
 											"font": "Arial;13;0",
-											"left": 184.72998046875,
+											"left": 182.55908203125,
 											"top": 21,
-											"width": 85.5380859375,
+											"width": 76.09912109375,
 											"height": 13,
 											"text": "SDJouerPartie"
 										},
@@ -6636,7 +6636,7 @@
 											"font": "Arial;13;1",
 											"left": 165,
 											"top": 21,
-											"width": 14.72998046875,
+											"width": 12.55908203125,
 											"height": 13,
 											"text": "sd"
 										}
@@ -6910,9 +6910,9 @@
 											},
 											"fillColor": "#91ffec",
 											"font": "Arial;13;0",
-											"left": 251.578125,
+											"left": 250.11181640625,
 											"top": 125,
-											"width": 101.419921875,
+											"width": 93.42822265625,
 											"height": 13,
 											"text": "GrillePasRemplie"
 										},
@@ -6926,7 +6926,7 @@
 											"font": "Arial;13;1",
 											"left": 221,
 											"top": 125,
-											"width": 25.578125,
+											"width": 24.11181640625,
 											"height": 13,
 											"text": "loop"
 										},
@@ -7133,9 +7133,9 @@
 											},
 											"fillColor": "#ffa3ff",
 											"font": "Arial;13;0",
-											"left": 285.07177734375,
+											"left": 283.61181640625,
 											"top": 261,
-											"width": 67.69482421875,
+											"width": 62.61669921875,
 											"height": 13,
 											"text": "checkTimer"
 										},
@@ -7149,7 +7149,7 @@
 											"font": "Arial;13;1",
 											"left": 261,
 											"top": 261,
-											"width": 19.07177734375,
+											"width": 17.61181640625,
 											"height": 13,
 											"text": "opt"
 										},
@@ -7183,7 +7183,7 @@
 															"font": "Arial;13;0",
 															"left": 276,
 															"top": 294,
-															"width": 83.0908203125,
+															"width": 78.56494140625,
 															"height": 13,
 															"text": "[timer >= 1.5s]"
 														}
@@ -7801,9 +7801,9 @@
 											},
 											"fillColor": "#adadff",
 											"font": "Arial;13;0",
-											"left": 333.07177734375,
+											"left": 331.61181640625,
 											"top": 365,
-											"width": 65.29541015625,
+											"width": 61.6328125,
 											"height": 13,
 											"text": "checkGrille"
 										},
@@ -7817,7 +7817,7 @@
 											"font": "Arial;13;1",
 											"left": 309,
 											"top": 365,
-											"width": 19.07177734375,
+											"width": 17.61181640625,
 											"height": 13,
 											"text": "opt"
 										},
@@ -7851,7 +7851,7 @@
 															"font": "Arial;13;0",
 															"left": 324,
 															"top": 398,
-															"width": 94.42138671875,
+															"width": 90.47314453125,
 															"height": 13,
 															"text": "[isValid == false]"
 														}
