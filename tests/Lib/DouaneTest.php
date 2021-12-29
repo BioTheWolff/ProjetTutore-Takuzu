@@ -8,6 +8,9 @@ require_once Path::get_path('l', 'Douane');
 class DouaneTest extends TestCase
 {
 
+    /**
+     * @covers Douane::message
+     */
     public function testMessage()
     {
         self::assertFalse(Douane::message("truc"));

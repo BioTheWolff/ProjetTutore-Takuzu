@@ -26,12 +26,18 @@ class AdapterTest extends TestCase
         [0, self::G, 1, self::G]
     ];
 
+    /**
+     * @covers MessageAdapter::grid_to_message
+     */
     public function testGrid_to_message()
     {
         self::assertEquals($this->message_full, MessageAdapter::grid_to_message($this->grid_full));
         self::assertEquals($this->message_partial, MessageAdapter::grid_to_message($this->grid_partial));
     }
 
+    /**
+     * @covers MessageAdapter::message_to_grid
+     */
     public function testMessage_to_grid()
     {
         self::assertEquals($this->grid_full, MessageAdapter::message_to_grid($this->message_full));

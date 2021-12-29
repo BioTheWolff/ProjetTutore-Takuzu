@@ -33,17 +33,32 @@ class GridSolverTest extends TestCase
         [self::G, 0, self::G, 1]
     ];
 
+    /**
+     * @covers GridSolver
+     * @covers GridVerifier::verify
+     * @covers VerifierAdapter
+     */
     public function testSolveFullGrid()
     {
 
         self::assertEquals($this->expected, GridSolver::solveGrid($this->multGrid));
     }
 
+    /**
+     * @covers GridSolver
+     * @covers GridVerifier::verify
+     * @covers VerifierAdapter
+     */
     public function testSolveGridMultOnly()
     {
         self::assertEquals($this->expected, GridSolver::solveGrid($this->multGrid));
     }
 
+    /**
+     * @covers GridSolver
+     * @covers GridVerifier::verify
+     * @covers VerifierAdapter
+     */
     public function testGapsTable()
     {
         $table = [
@@ -73,11 +88,23 @@ class GridSolverTest extends TestCase
 
     }
 
+    /**
+     * @covers GridSolver
+     * @covers Grid
+     * @covers GridVerifier::verify
+     * @covers VerifierAdapter
+     */
     public function testSolveGridDistance1()
     {
         self::assertEquals($this->expected, GridSolver::solveGrid($this->appearance1Grid));
     }
 
+    /**
+     * @covers GridSolver
+     * @covers Grid
+     * @covers GridVerifier::verify
+     * @covers VerifierAdapter
+     */
     public function testSolveGrid()
     {
         $fullExpected = [

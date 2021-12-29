@@ -122,4 +122,6 @@ modules.xml
 # environment
 config/env.php
 
+coverage/
+
 *.testme.php

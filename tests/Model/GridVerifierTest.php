@@ -41,23 +41,49 @@ class GridVerifierTest extends TestCase
         return $code == VerifierAdapter::get_code($grid);
     }
 
+    /**
+     * @covers VerifierAdapter
+     * @covers GridVerifier::verify
+     */
     public function testValid()
     {
-        self::assertTrue(self::check(IVerifier::CODE_NOERR, $this->valid));
+        self::assertTrue(VerifierAdapter::is_valid($this->valid));
     }
 
+    /**
+     * @covers VerifierAdapter
+     * @covers GridVerifier::verify
+     */
     public function testErrorMult()
     {
         self::assertTrue(self::check(IVerifier::CODE_MULT, $this->mult));
     }
 
+    /**
+     * @covers VerifierAdapter
+     * @covers GridVerifier::verify
+     */
     public function testErrorEquality()
     {
         self::assertTrue(self::check(IVerifier::CODE_STABILITY, $this->equality));
     }
 
+    /**
+     * @covers VerifierAdapter
+     * @covers GridVerifier::verify
+     */
     public function testErrorShape()
     {
         self::assertTrue(self::check(IVerifier::CODE_SHAPE, $this->shape));
+    }
+
+    /**
+     * @covers VerifierAdapter
+     * @covers GridVerifier
+     */
+    public function testFunctioningMessage()
+    {
+        self::assertEquals("OK", VerifierAdapter::get_message($this->valid));
+        self::assertEquals("MULT:l:0:2", VerifierAdapter::get_message($this->mult));
     }
 }
