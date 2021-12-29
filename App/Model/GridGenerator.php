@@ -29,7 +29,7 @@ class GridGenerator
         while (++$nb < $size && !VerifierAdapter::is_valid($grid));
 
         // then remove values to get only $fillPercentage values left
-        while (self::count_gap_percentage($grid) < (1.0 - $fillPercentage))
+        while (self::count_fill_percentage($grid) > $fillPercentage)
         {
             do
             {
@@ -44,10 +44,10 @@ class GridGenerator
         return $grid;
     }
 
-    public static function count_gap_percentage(array $grid): float
+    public static function count_fill_percentage(array $grid): float
     {
         [$size, $message] = explode(":", MessageAdapter::grid_to_message($grid));
 
-        return substr_count($message, "_") / ((float)$size**2);
+        return ((int)$size**2 - substr_count($message, "_")) / ((float)$size**2);
     }
 }
