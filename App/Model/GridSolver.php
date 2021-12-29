@@ -225,6 +225,9 @@ class GridSolver
         return $direction == 'l' ? $this->grid[$i][$j] : $this->grid[$j][$i];
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function find_first_candidate(string $direction, int $i): int
     {
         if ($this->get_gaps($direction, $i) == 0) return -1;
@@ -235,6 +238,9 @@ class GridSolver
         return -1;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function find_second_candidate(string $direction, int $i): int
     {
         if ($this->get_gaps($direction, $i) == 0) return -1;
@@ -403,6 +409,9 @@ class GridSolver
         foreach ($candidates as $j => $v) $this->fill($direction, $i, $j, $v);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function pretty_print_self()
     {
         echo "grid: [\n";

@@ -45,10 +45,9 @@ class VerifierAdapter implements IVerifier
 
             case IVerifier::FORMAT_CHECK_NOERR:
                 return IVerifier::CODE_NOERR == $res[1];
-
-            default:
-                throw new RuntimeException("Unrecognised verifier format.");
         }
+
+        return null;
     }
 
     public static function get_message(array $grid, bool $force_full = false, string $direction = null, int $i = null, array $candidates = null)
@@ -66,6 +65,12 @@ class VerifierAdapter implements IVerifier
     public static function get_code(array $grid, bool $force_full = false, string $direction = null, int $i = null, array $candidates = null)
     {
         $format = self::FORMAT_CODE | ($force_full * self::FORMAT_ENSURE_FULL);
+        return self::_verify($format, $grid, self::handle_insertions($direction, $i, $candidates));
+    }
+
+    public static function raw_output(array $grid, bool $force_full = false, string $direction = null, int $i = null, array $candidates = null)
+    {
+        $format = self::FORMAT_ARRAY | ($force_full * self::FORMAT_ENSURE_FULL);
         return self::_verify($format, $grid, self::handle_insertions($direction, $i, $candidates));
     }
 }
