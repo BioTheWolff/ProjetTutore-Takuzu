@@ -1,6 +1,9 @@
 <?php
 
 
+/**
+ * @codeCoverageIgnore
+ */
 class RenderEngine
 {
 
