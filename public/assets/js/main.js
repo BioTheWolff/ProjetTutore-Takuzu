@@ -59,9 +59,8 @@ function openPageAction(action)
 {
     let baseUrl = window.location.href;
     if (window.location.search !== "") baseUrl = baseUrl.replace(window.location.search, "");
-
-    let url = baseUrl + `?action=${action}`;
-    window.open(url, "_self");
+    if (action !== "") baseUrl += `?action=${action}`;
+    window.open(baseUrl, "_self");
 }
 
 function goHome(){
