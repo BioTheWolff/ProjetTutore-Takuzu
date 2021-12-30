@@ -10,7 +10,7 @@ class GridGenerator
      * @param float $fillPercentage le pourcentage de remplissage
      * @return int[][] Une grille de takuzu remplie à $fillPercentage pourcents
      */
-    public static function generate(int $size, float $fillPercentage)
+    public static function generate(int $size, float $fillPercentage): array
     {
         $str = "$size:" . str_repeat("_", $size**2);
         $grid = MessageAdapter::message_to_grid(MessageAdapter::solve($str));
@@ -26,7 +26,7 @@ class GridGenerator
             $grid[$lineTo] = $grid[$lineFrom];
             $grid[$lineFrom] = $temp;
         }
-        while (++$nb < $size && !VerifierAdapter::is_valid($grid));
+        while (++$nb < $size || !VerifierAdapter::is_valid($grid, true));
 
         // then remove values to get only $fillPercentage values left
         while (self::count_fill_percentage($grid) > $fillPercentage)
