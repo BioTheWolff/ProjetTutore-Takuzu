@@ -55,24 +55,25 @@ musicButton.onclick = function (){
     }
 }
 
+function openPageAction(action)
+{
+    let baseUrl = window.location.href;
+    if (window.location.search !== "") baseUrl = baseUrl.replace(window.location.search, "");
+
+    let url = baseUrl + `?action=${action}`;
+    window.open(url, "_self");
+}
+
 function goHome(){
-    let index = document.location.href.lastIndexOf('?action');
-    let url = document.location.href.slice(0, index);
-    window.open(url,"_self");
+    openPageAction("")
 }
 
 function goContact(){
-    let index = document.location.href.lastIndexOf('?action');
-    let url = document.location.href.slice(0, index);
-    url = url + "?action=contact";
-    window.open(url,"_self");
+    openPageAction("contact");
 }
 
 function goRegle(){
-    let index = document.location.href.lastIndexOf('?action');
-    let url = document.location.href.slice(0, index);
-    url = url + "?action=regle";
-    window.open(url,"_self");
+    openPageAction("regle");
 }
 
 function checkSound()
