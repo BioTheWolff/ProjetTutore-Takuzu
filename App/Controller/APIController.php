@@ -32,7 +32,7 @@ class APIController
     {
         $size = (int)($_GET['size'] ?? 8);
         if ($size > 16) $size = 16;
-        if ($size < 6) $size = 6;
+        if ($size < 4) $size = 4;
 
         $fp = (float)($_GET['fillPercentage'] ?? 0.25);
         if ($fp > 0.7) $fp = 0.7;

@@ -3,7 +3,7 @@ const grid = document.getElementById("grid");
 const backwardBtn = document.getElementById("backward");
 const forwardBtn = document.getElementById("forward");
 const soluceBtn = document.getElementById("soluce");
-var pauseBtn = document.getElementById("pause");
+const pauseBtn = document.getElementById("pause");
 
 // return grid size from url
 function getSize() {
@@ -18,7 +18,7 @@ function getSize() {
 
 // fetch grid from php api
 function downloadAndParseGrid() {
-    fetch("?action=api-generate&size=" + getSize())
+    fetch("?action=api-generate&fillPercentage=0.4&size=" + getSize())
         .then(response => response.text())
         .then(data => {
             console.log(data);
@@ -126,7 +126,7 @@ function sendValues() {
 
 function alertWin(data) {
     if (data === "OK") {
-        if (parseInt(valuesFilled) === size ** 2) alert("Bravo");
+        if (getValues().search(/_/g)) alert("Bravo");
     } else if (data === "NOK") {
         alert("ERREUR");
     } else {
