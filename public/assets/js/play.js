@@ -126,7 +126,7 @@ function sendValues() {
 
 function alertWin(data) {
     if (data === "OK") {
-        if (getValues().search(/_/g)) alert("Bravo");
+        if (getValues().search(/_/g) === -1) alert("Bravo");
     } else if (data === "NOK") {
         alert("ERREUR");
     } else {
