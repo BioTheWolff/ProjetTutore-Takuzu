@@ -6,19 +6,31 @@ const soluceBtn = document.getElementById("soluce");
 const pauseBtn = document.getElementById("pause");
 
 // return grid size from url
-function getSize() {
-    let url = window.location.href;
-    let res = url.match(/((?<=size=)[0-9]+)/g);
-    if (res.toString() === "") {
-        return 8; // taille par défaut
-    } else {
-        return parseInt(res.toString());
+function initDifficultySettings() {
+    let difficulty = new URLSearchParams(window.location.search).get("difficulty");
+    if (difficulty === null) difficulty = "easy";
+
+    switch (difficulty) {
+        case "medium":
+            size = 8;
+            fillPercentage = 0.5;
+            break;
+
+        case "hard":
+            size = 8;
+            fillPercentage = 0.25;
+            break;
+
+        default:
+            size = 6;
+            fillPercentage = 0.4;
+            break;
     }
 }
 
 // fetch grid from php api
 function downloadAndParseGrid() {
-    fetch("?action=api-generate&fillPercentage=0.4&size=" + getSize())
+    fetch(`?action=api-generate&fillPercentage=${fillPercentage}&size=${size}`)
         .then(response => response.text())
         .then(data => {
             console.log(data);
@@ -265,9 +277,12 @@ function displaySoluce(data) {
 
 // general values bound to be changed
 let cells = document.getElementsByClassName("cell");
-let size = getSize();
+let size;
+let fillPercentage;
 let valuesFilled = 0;
 let initialGrid = "";
+
+initDifficultySettings();
 
 // timer for sending grids to api
 let timer = setTimeout(sendValues, 3000);
@@ -286,16 +301,16 @@ downloadAndParseGrid();
 
 
 /*TIMER*/
-var heuresLabel = document.getElementById("heures");
-var minutesLabel = document.getElementById("minutes");
-var secondesLabel = document.getElementById("secondes");
-var totalSecondes = 0;
+const heuresLabel = document.getElementById("heures");
+const minutesLabel = document.getElementById("minutes");
+const secondesLabel = document.getElementById("secondes");
+let totalSecondes = 0;
 setInterval(setTime, 1000);
 
 /*POPUP*/
-let popupContainer = document.getElementById("popup-container");
-var pauseMenuPopup = document.getElementById("myPopupOption");
-var depause = document.getElementById("depause");
+const popupContainer = document.getElementById("popup-container");
+const pauseMenuPopup = document.getElementById("myPopupOption");
+const depause = document.getElementById("depause");
 
 
 pauseBtn.onclick = () => {showPopup(pauseMenuPopup); pause = true; setTime();}

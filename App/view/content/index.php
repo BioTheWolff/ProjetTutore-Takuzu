@@ -17,10 +17,10 @@
                             <h2>Lancer une partie</h2>
                         </div>
                         <div class="popup-body">
-                            <h3>Choisissez de la taille de la grille</h3>
-                            <button id="8" type="submit" class="outline" onclick="launchGame(8)">8x8</button>
-                            <button id="10" type="submit" class="outline" onclick="launchGame(10)">10x10</button>
-                            <button id="12" type="submit" class="outline" onclick="launchGame(12)">12x12</button>
+                            <h3>Choisissez de la difficulté de la partie</h3>
+                            <button class="outline" onclick="launchGame('easy')">Facile</button>
+                            <button class="outline" onclick="launchGame('medium')">Moyen</button>
+                            <button class="outline" onclick="launchGame('hard')">Difficile</button>
                         </div>
                     </div>
                 </div>

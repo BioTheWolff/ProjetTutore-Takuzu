@@ -16,8 +16,8 @@ var spanXOption = document.getElementsByClassName("close")[1];
 
 
 //Ouvre la page jeu depuis la page d'accueil en fonction de la taille
-function launchGame(taille) {
-    let url = "?action=play&size=" + taille;
+function launchGame(difficulty) {
+    let url = "?action=play&difficulty=" + difficulty;
     window.open(url,"_self");
     checkSound();
 }
